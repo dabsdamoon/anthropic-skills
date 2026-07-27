@@ -1,8 +1,0 @@
-{
-  "name": "pr-creator",
-  "description": "Creates comprehensive Pull Request documentation with git analysis, change categorization, and test plans",
-  "version": "1.0.0",
-  "author": {
-    "name": "dabsdamoon"
-  }
-}

@@ -1,7 +1,7 @@
 {
   "name": "developer-workflow-skills",
   "description": "Developer workflow toolkit: PR creation, PR checklist verification, release pipeline setup, deploy checks, webapp testing, refactoring-resistant test writing, Git-based work reports, Docker RAM checking, debugging retrospectives, MCP server building, prompt optimization, subagent creation, and GCloud setup",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "author": {
     "name": "dabsdamoon"
   },
