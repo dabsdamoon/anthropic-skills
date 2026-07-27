@@ -31,6 +31,31 @@ codex plugin add developer-workflow-skills@my-little-skills
 
 The installed plugin is available in every repository opened by that user. Codex stores plugin configuration and cache data under `CODEX_HOME`, which defaults to `~/.codex`; installation is not shared automatically with other operating-system accounts.
 
+#### `humanize-korean` installation
+
+`humanize-korean` belongs to the `writing-skills` plugin and must be installed
+explicitly before Codex or Claude Code can load it. Installing
+`developer-workflow-skills` alone is not sufficient, even though
+`generate-git-work-report` uses `humanize-korean` for Korean report narrative.
+
+For Codex:
+
+```bash
+codex plugin add writing-skills@my-little-skills
+```
+
+For Claude Code:
+
+```text
+/plugin install writing-skills@my-little-skills
+```
+
+Adding or upgrading the marketplace only refreshes the available plugin
+catalog and updates plugins that are already installed; it does not
+automatically install newly published plugins. Start a new session if
+`writing-skills:humanize-korean` does not appear immediately after
+installation.
+
 Run the shared update primitive at any time:
 
 ```bash
