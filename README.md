@@ -31,6 +31,29 @@ codex plugin add developer-workflow-skills@my-little-skills
 
 The installed plugin is available in every repository opened by that user. Codex stores plugin configuration and cache data under `CODEX_HOME`, which defaults to `~/.codex`; installation is not shared automatically with other operating-system accounts.
 
+#### `pr-creator` installation
+
+`pr-creator` is distributed only as
+`developer-workflow-skills:pr-creator`. Install
+`developer-workflow-skills@my-little-skills` rather than maintaining a
+standalone plugin or a manual copy under `~/.codex/skills`.
+
+Remove the retired standalone plugin before refreshing the canonical plugin:
+
+```bash
+codex plugin remove pr-creator@my-little-skills
+codex plugin marketplace upgrade my-little-skills
+```
+
+Claude Code users should uninstall the retired plugin at the scope where it
+was installed, then refresh the marketplace and canonical plugin:
+
+```bash
+claude plugin uninstall pr-creator@my-little-skills --scope local -y
+claude plugin marketplace update my-little-skills
+claude plugin update developer-workflow-skills@my-little-skills --scope user
+```
+
 #### `humanize-korean` installation
 
 `humanize-korean` belongs to the `writing-skills` plugin and must be installed

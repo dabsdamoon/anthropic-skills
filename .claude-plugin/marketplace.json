@@ -54,11 +54,6 @@
       "source": "./plugins/houmy-skills"
     },
     {
-      "name": "pr-creator",
-      "description": "Creates comprehensive Pull Request documentation with git analysis, change categorization, and test plans",
-      "source": "./plugins/pr-creator"
-    },
-    {
       "name": "claude-api",
       "description": "Claude API and SDK documentation skill for building LLM-powered applications",
       "source": "./",
