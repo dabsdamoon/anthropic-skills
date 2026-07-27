@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/as-built-evidence.schema.json",
+  "title": "As-Built Implementation Evidence",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "status",
+    "project",
+    "evidence_boundary",
+    "git_evidence",
+    "implementation_items",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "as-built-evidence"},
+    "status": {"enum": ["draft", "final"]},
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {"name": {"type": "string", "minLength": 1}}
+    },
+    "evidence_boundary": {
+      "type": "object",
+      "required": ["repository", "revision", "collected_at"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "collected_at": {"type": "string", "minLength": 1}
+      }
+    },
+    "git_evidence": {
+      "type": "object",
+      "required": [
+        "head",
+        "commit_count",
+        "first_commit_at",
+        "last_commit_at",
+        "fingerprint",
+        "commits"
+      ],
+      "properties": {
+        "head": {"type": "string"},
+        "commit_count": {"type": "integer", "minimum": 0},
+        "first_commit_at": {"type": ["string", "null"]},
+        "last_commit_at": {"type": ["string", "null"]},
+        "fingerprint": {"type": "string", "minLength": 1},
+        "commits": {"type": "array"}
+      }
+    },
+    "implementation_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "delivery_status",
+          "change_type",
+          "related_outcome_ids",
+          "related_decision_ids",
+          "verification",
+          "provenance"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1},
+          "delivery_status": {
+            "enum": ["planned", "in-progress", "completed", "accepted", "excluded"]
+          },
+          "change_type": {"enum": ["new", "modified", "reused"]},
+          "related_outcome_ids": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "related_decision_ids": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "verification": {"type": "array", "items": {"type": "string"}},
+          "provenance": {"$ref": "#/$defs/provenance"}
+        }
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "source_reference",
+        "captured_at",
+        "confidence",
+        "customer_confirmed",
+        "evidence"
+      ]
+    }
+  }
+}

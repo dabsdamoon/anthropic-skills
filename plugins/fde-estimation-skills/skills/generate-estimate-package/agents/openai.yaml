@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Estimate Package"
+  short_description: "Create consistent estimates and basis reports"
+  default_prompt: "Use $generate-estimate-package to create an evidence-backed budgetary estimate and basis report."

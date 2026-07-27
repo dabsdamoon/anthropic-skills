@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/scope-traceability.schema.json",
+  "title": "Scope Traceability and Delta",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "status",
+    "project",
+    "items",
+    "unresolved_questions"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "scope-traceability"},
+    "status": {"enum": ["draft", "final"]},
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {"name": {"type": "string", "minLength": 1}}
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "classification",
+          "rationale",
+          "customer_confirmed",
+          "baseline_refs",
+          "discovery_refs",
+          "implementation_refs",
+          "allocations"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "classification": {
+            "enum": [
+              "explicit-baseline",
+              "derived-necessary",
+              "field-validated",
+              "supplier-initiated",
+              "future-option",
+              "unresolved"
+            ]
+          },
+          "rationale": {"type": "string", "minLength": 1},
+          "customer_confirmed": {"type": "boolean"},
+          "approval_reference": {"type": "string"},
+          "baseline_refs": {"type": "array", "items": {"type": "string"}},
+          "discovery_refs": {"type": "array", "items": {"type": "string"}},
+          "implementation_refs": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "allocations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "scenario",
+                "role_id",
+                "effort_mm",
+                "commercial_status",
+                "include_in_estimate",
+                "note"
+              ],
+              "properties": {
+                "scenario": {
+                  "enum": [
+                    "replacement-value",
+                    "remaining-work",
+                    "change-adjustment"
+                  ]
+                },
+                "role_id": {"type": "string", "minLength": 1},
+                "effort_mm": {"type": "number", "minimum": 0},
+                "commercial_status": {
+                  "enum": ["reference-only", "proposed", "confirmed", "excluded"]
+                },
+                "include_in_estimate": {"type": "boolean"},
+                "note": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "unresolved_questions": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reconcile Scope Delta"
+  short_description: "Classify baseline, delivered, and future scope"
+  default_prompt: "Use $reconcile-scope-delta to map customer outcomes to discovered and implemented scope."

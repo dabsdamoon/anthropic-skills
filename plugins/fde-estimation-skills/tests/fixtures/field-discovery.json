@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "document_type": "field-discovery",
+  "status": "final",
+  "project": {"name": "Fixture Product"},
+  "discoveries": [
+    {
+      "id": "DSC-001",
+      "title": "Duplicate sources",
+      "statement": "Two source systems contain overlapping records.",
+      "affected_outcome_ids": ["OUT-001"],
+      "validation_status": "customer-confirmed",
+      "provenance": {
+        "source_type": "validated",
+        "source_reference": "meeting-2026-01-02",
+        "captured_at": "2026-01-02",
+        "confidence": "confirmed",
+        "customer_confirmed": true,
+        "evidence": ["meeting-2026-01-02"]
+      }
+    }
+  ],
+  "solution_decisions": [
+    {
+      "id": "DEC-001",
+      "title": "Reconcile duplicate sources",
+      "discovery_ids": ["DSC-001"],
+      "selected_solution": "Use deterministic matching rules.",
+      "alternatives": ["Show both sources without reconciliation."],
+      "rationale": "The consolidated outcome requires one non-duplicated value.",
+      "status": "implemented",
+      "provenance": {
+        "source_type": "validated",
+        "source_reference": "decision-2026-01-03",
+        "captured_at": "2026-01-03",
+        "confidence": "confirmed",
+        "customer_confirmed": true,
+        "evidence": ["decision-2026-01-03"]
+      }
+    }
+  ],
+  "open_questions": []
+}

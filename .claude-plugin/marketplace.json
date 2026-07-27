@@ -24,6 +24,11 @@
       "source": "./plugins/developer-workflow-skills"
     },
     {
+      "name": "fde-estimation-skills",
+      "description": "FDE customer-outcome capture, field discovery, as-built evidence, scope reconciliation, and estimate document generation",
+      "source": "./plugins/fde-estimation-skills"
+    },
+    {
       "name": "writing-skills",
       "description": "Documentation co-authoring, internal communications, system prompts, Korean AI-text humanizing, and skill creation guides",
       "source": "./plugins/writing-skills"

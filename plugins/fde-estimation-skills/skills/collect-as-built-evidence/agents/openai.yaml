@@ -1,0 +1,4 @@
+interface:
+  display_name: "Collect As-Built Evidence"
+  short_description: "Extract implementation evidence without inventing effort"
+  default_prompt: "Use $collect-as-built-evidence to collect traceable as-built evidence from this repository."

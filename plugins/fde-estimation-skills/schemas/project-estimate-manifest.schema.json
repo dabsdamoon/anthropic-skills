@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/project-estimate-manifest.schema.json",
+  "title": "Project Estimate Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "created_at",
+    "validation_report",
+    "inputs"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "project-estimate-manifest"},
+    "created_at": {"type": "string", "minLength": 1},
+    "validation_report": {"type": "string", "minLength": 1},
+    "inputs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["path", "fingerprint"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "fingerprint": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

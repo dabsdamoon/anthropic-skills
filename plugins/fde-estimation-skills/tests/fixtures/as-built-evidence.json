@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "document_type": "as-built-evidence",
+  "status": "final",
+  "project": {"name": "Fixture Product"},
+  "evidence_boundary": {
+    "repository": "/tmp/fixture-product",
+    "revision": "HEAD",
+    "collected_at": "2026-01-04"
+  },
+  "git_evidence": {
+    "head": "abcdef1234567890",
+    "commit_count": 1,
+    "first_commit_at": "2026-01-04T00:00:00Z",
+    "last_commit_at": "2026-01-04T00:00:00Z",
+    "fingerprint": "fixture-fingerprint",
+    "commits": [
+      {
+        "hash": "abcdef1234567890",
+        "authored_at": "2026-01-04T00:00:00Z",
+        "subject": "Implement reconciliation"
+      }
+    ]
+  },
+  "implementation_items": [
+    {
+      "id": "IMP-001",
+      "title": "Deterministic reconciliation",
+      "description": "Reconcile duplicate source records.",
+      "delivery_status": "completed",
+      "change_type": "new",
+      "related_outcome_ids": ["OUT-001"],
+      "related_decision_ids": ["DEC-001"],
+      "verification": ["tests/test_reconciliation.py"],
+      "provenance": {
+        "source_type": "implemented",
+        "source_reference": "commit:abcdef1234567890",
+        "captured_at": "2026-01-04",
+        "confidence": "confirmed",
+        "customer_confirmed": false,
+        "evidence": [
+          "commit:abcdef1234567890",
+          "tests/test_reconciliation.py"
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Git does not prove elapsed effort or customer approval."
+  ]
+}

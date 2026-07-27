@@ -1,0 +1,4 @@
+interface:
+  display_name: "Capture Customer Outcomes"
+  short_description: "Turn source requests into a traceable baseline"
+  default_prompt: "Use $capture-customer-outcomes to turn customer source materials into a traceable baseline."

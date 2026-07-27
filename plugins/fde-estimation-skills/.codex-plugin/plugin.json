@@ -1,0 +1,22 @@
+{
+  "name": "fde-estimation-skills",
+  "version": "0.1.0",
+  "description": "Evidence-backed FDE discovery, scope reconciliation, and software estimate document workflows",
+  "author": {
+    "name": "dabsdamoon"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "FDE Estimation Skills",
+    "shortDescription": "Turn field discovery and delivery evidence into defensible estimates",
+    "longDescription": "Capture customer outcomes, document Forward Deployed Engineering discoveries, collect as-built evidence, define pricing policy, reconcile scope deltas, and generate consistent budgetary estimates and basis-of-estimate reports.",
+    "developerName": "dabsdamoon",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write", "Execute"],
+    "defaultPrompt": [
+      "Build a traceable baseline from these customer request documents.",
+      "Map this repository and field-discovery record into a scope delta.",
+      "Generate a budgetary estimate and its basis from the evidence package."
+    ]
+  }
+}

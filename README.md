@@ -90,6 +90,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **document-skills** | xlsx, docx, pptx, pdf | Create, read, edit spreadsheets, Word docs, presentations, and PDFs |
 | **design-skills** | frontend-design, algorithmic-art, canvas-design, brand-guidelines, theme-factory, slack-gif-creator, web-artifacts-builder | Frontend UI, generative art, visual design, and brand styling |
 | **developer-workflow-skills** | pr-creator, pr-checklist-verifier, setup-release-pipeline, deploy-check, webapp-testing, refactoring-resistant-tests, generate-git-work-report, docker-ram-checker, mcp-builder, prompt-optimizer, subagent-creator, debugging-retrospective, gcloud-direnv-setup | PR docs, release pipelines, deploy checks, Git-based execution histories, browser testing, refactoring-resistant testing, Docker memory checks, debugging postmortems, and more |
+| **fde-estimation-skills** | capture-customer-outcomes, document-field-discovery, collect-as-built-evidence, define-estimation-policy, reconcile-scope-delta, generate-estimate-package | Evidence-backed FDE discovery, scope reconciliation, budgetary estimates, and basis-of-estimate reports |
 | **writing-skills** | doc-coauthoring, internal-comms, skill-creator, system-prompt-creator, humanize-korean | Documentation workflows, internal comms, skill/prompt authoring, Korean AI-text humanizing |
 | **resume-skills** | resume-formatter, resume-translator, resume-project-summary | Resume formatting, EN/JP/KR/CN translation, portfolio summaries from codebases |
 | **config-skills** | claude-config-migrator, update-notes, update-houmy-notes | Migrate Claude Code config between repos, write update notes |
@@ -128,6 +129,17 @@ These skills are original to this marketplace — not available in Anthropic's o
 | **generate-git-work-report** | Produces external and internal Git work reports from a verifiable evidence snapshot, with reference-matched DOCX/PDF authoring and full-page QA gates |
 | **gcloud-direnv-setup** | Configures per-directory GCP credentials with direnv for multi-account setups |
 | **refactoring-resistant-tests** | Builds behavior-focused tests that survive internal refactors and use stable observable boundaries |
+
+### FDE Estimation
+
+| Skill | What It Does |
+|-------|-------------|
+| **capture-customer-outcomes** | Preserves the customer's original outcomes, explicit scope, assumptions, constraints, and approval baseline |
+| **document-field-discovery** | Separates field observations, FDE inferences, solution decisions, and customer validation |
+| **collect-as-built-evidence** | Builds a read-only implementation evidence record from Git and delivery artifacts without treating commits as hours |
+| **define-estimation-policy** | Defines dated rates, cost composition, tax, uncertainty, and validity rules |
+| **reconcile-scope-delta** | Maps baseline, discovery, and implementation evidence into independent commercial scenarios |
+| **generate-estimate-package** | Produces and verifies a budgetary estimate, basis of estimate, and optional change or remaining-work documents from one calculation |
 
 ### Writing
 
@@ -187,6 +199,7 @@ plugins/
   document-skills/          # Plugin manifests and skills/
   design-skills/
   developer-workflow-skills/
+  fde-estimation-skills/
   writing-skills/
   resume-skills/
   config-skills/

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/customer-baseline.schema.json",
+  "title": "Customer Outcome and Contract Baseline",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "status",
+    "project",
+    "source_documents",
+    "outcomes",
+    "explicit_scope",
+    "constraints",
+    "assumptions",
+    "approvals"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "customer-baseline"},
+    "status": {"enum": ["draft", "final"]},
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "customer": {"type": "string"},
+        "supplier": {"type": "string"},
+        "currency": {"type": "string", "minLength": 3}
+      },
+      "additionalProperties": false
+    },
+    "source_documents": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/sourceDocument"}
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/outcome"}
+    },
+    "explicit_scope": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/scope"}
+    },
+    "constraints": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "approvals": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/approval"}
+    }
+  },
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "source_reference",
+        "captured_at",
+        "confidence",
+        "customer_confirmed",
+        "evidence"
+      ]
+    },
+    "sourceDocument": {
+      "type": "object",
+      "required": ["id", "title", "kind", "location", "source_date"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "source_date": {"type": "string", "minLength": 1}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "problem",
+        "desired_result",
+        "users",
+        "success_measures",
+        "provenance"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "problem": {"type": "string", "minLength": 1},
+        "desired_result": {"type": "string", "minLength": 1},
+        "users": {"type": "array", "items": {"type": "string"}},
+        "success_measures": {"type": "array", "items": {"type": "string"}},
+        "provenance": {"$ref": "#/$defs/provenance"}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["id", "title", "description", "included", "provenance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "included": {"type": "boolean"},
+        "provenance": {"$ref": "#/$defs/provenance"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": ["id", "description", "provenance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "provenance": {"$ref": "#/$defs/provenance"}
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["id", "subject", "status", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "subject": {"type": "string", "minLength": 1},
+        "status": {"enum": ["approved", "rejected", "pending"]},
+        "reference": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

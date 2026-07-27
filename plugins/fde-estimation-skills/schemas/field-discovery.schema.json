@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/field-discovery.schema.json",
+  "title": "FDE Field Discovery and Solution Definition",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "status",
+    "project",
+    "discoveries",
+    "solution_decisions",
+    "open_questions"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "field-discovery"},
+    "status": {"enum": ["draft", "final"]},
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {"name": {"type": "string", "minLength": 1}}
+    },
+    "discoveries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "statement",
+          "affected_outcome_ids",
+          "validation_status",
+          "provenance"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "statement": {"type": "string", "minLength": 1},
+          "affected_outcome_ids": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "validation_status": {
+            "enum": ["unverified", "customer-reviewed", "customer-confirmed"]
+          },
+          "provenance": {"$ref": "#/$defs/provenance"}
+        }
+      }
+    },
+    "solution_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "discovery_ids",
+          "selected_solution",
+          "alternatives",
+          "rationale",
+          "status",
+          "provenance"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "discovery_ids": {"type": "array", "items": {"type": "string"}},
+          "selected_solution": {"type": "string", "minLength": 1},
+          "alternatives": {"type": "array", "items": {"type": "string"}},
+          "rationale": {"type": "string", "minLength": 1},
+          "status": {
+            "enum": ["proposed", "validated", "implemented", "superseded"]
+          },
+          "provenance": {"$ref": "#/$defs/provenance"}
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "owner", "impact"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "question": {"type": "string", "minLength": 1},
+          "owner": {"type": "string", "minLength": 1},
+          "impact": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "source_reference",
+        "captured_at",
+        "confidence",
+        "customer_confirmed",
+        "evidence"
+      ]
+    }
+  }
+}
