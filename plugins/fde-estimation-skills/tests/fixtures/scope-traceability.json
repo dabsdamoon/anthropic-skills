@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "document_type": "scope-traceability",
+  "status": "final",
+  "project": {"name": "Fixture Product"},
+  "items": [
+    {
+      "id": "TRC-001",
+      "title": "Consolidated result",
+      "classification": "explicit-baseline",
+      "rationale": "The initial request explicitly includes the result.",
+      "customer_confirmed": true,
+      "approval_reference": "APR-001",
+      "baseline_refs": ["OUT-001", "SCP-001"],
+      "discovery_refs": [],
+      "implementation_refs": [],
+      "allocations": [
+        {
+          "scenario": "replacement-value",
+          "role_id": "ROLE-BA",
+          "effort_mm": 1,
+          "commercial_status": "reference-only",
+          "include_in_estimate": true,
+          "note": "Reference rebuild effort."
+        }
+      ]
+    },
+    {
+      "id": "TRC-002",
+      "title": "Future analysis",
+      "classification": "future-option",
+      "rationale": "The outcome supports an optional future analysis.",
+      "customer_confirmed": false,
+      "baseline_refs": ["OUT-001"],
+      "discovery_refs": ["DSC-001"],
+      "implementation_refs": [],
+      "allocations": [
+        {
+          "scenario": "remaining-work",
+          "role_id": "ROLE-DEV",
+          "effort_mm": 0.5,
+          "commercial_status": "proposed",
+          "include_in_estimate": true,
+          "note": "Future selectable work."
+        }
+      ]
+    },
+    {
+      "id": "TRC-003",
+      "title": "Duplicate reconciliation",
+      "classification": "field-validated",
+      "rationale": "The customer validated the discovered duplicate sources.",
+      "customer_confirmed": true,
+      "approval_reference": "decision-2026-01-03",
+      "baseline_refs": ["OUT-001"],
+      "discovery_refs": ["DSC-001"],
+      "implementation_refs": ["IMP-001"],
+      "allocations": [
+        {
+          "scenario": "change-adjustment",
+          "role_id": "ROLE-DEV",
+          "effort_mm": 1,
+          "commercial_status": "proposed",
+          "include_in_estimate": true,
+          "note": "Completed scope proposed for written adjustment."
+        }
+      ]
+    }
+  ],
+  "unresolved_questions": [
+    "Confirm the commercial treatment of the completed reconciliation."
+  ]
+}

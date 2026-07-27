@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "document_type": "estimation-policy",
+  "status": "final",
+  "currency": "KRW",
+  "locale": "ko-KR",
+  "valid_from": "2026-01-01",
+  "valid_until": "2026-12-31",
+  "rate_sources": [
+    {
+      "id": "RATE-001",
+      "title": "Fixture role rates",
+      "location": "fixture://role-rates",
+      "retrieved_at": "2026-01-01"
+    }
+  ],
+  "roles": [
+    {
+      "id": "ROLE-BA",
+      "title": "Business Analyst",
+      "monthly_rate": 1000,
+      "source_id": "RATE-001"
+    },
+    {
+      "id": "ROLE-DEV",
+      "title": "Application Developer",
+      "monthly_rate": 2000,
+      "source_id": "RATE-001"
+    }
+  ],
+  "cost_rules": {
+    "overhead_rate_on_direct": 0,
+    "technical_fee_rate_on_direct_plus_overhead": 0,
+    "profit_rate_on_cost": 0,
+    "risk_rate_on_cost": 0,
+    "discount_rate": 0,
+    "tax_rate": 0.1,
+    "rounding_unit": 1,
+    "rounding_mode": "HALF_UP"
+  },
+  "estimation_method": {
+    "effort_unit": "M/M",
+    "method": "bottom-up role effort",
+    "confidence_low_percent": -10,
+    "confidence_high_percent": 20,
+    "validity_days": 30
+  }
+}

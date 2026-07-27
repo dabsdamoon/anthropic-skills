@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document Field Discovery"
+  short_description: "Record field evidence, inferences, and decisions"
+  default_prompt: "Use $document-field-discovery to document field evidence, inferences, decisions, and validation."

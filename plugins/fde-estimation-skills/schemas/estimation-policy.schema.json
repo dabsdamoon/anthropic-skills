@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/estimation-policy.schema.json",
+  "title": "Estimation Policy",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "status",
+    "currency",
+    "locale",
+    "valid_from",
+    "valid_until",
+    "rate_sources",
+    "roles",
+    "cost_rules",
+    "estimation_method"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "estimation-policy"},
+    "status": {"enum": ["draft", "final"]},
+    "currency": {"type": "string", "minLength": 3},
+    "locale": {"type": "string", "minLength": 2},
+    "valid_from": {"type": "string", "minLength": 1},
+    "valid_until": {"type": "string", "minLength": 1},
+    "rate_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "location", "retrieved_at"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "retrieved_at": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "monthly_rate", "source_id"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "monthly_rate": {"type": "number", "minimum": 0},
+          "source_id": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "cost_rules": {
+      "type": "object",
+      "required": [
+        "overhead_rate_on_direct",
+        "technical_fee_rate_on_direct_plus_overhead",
+        "profit_rate_on_cost",
+        "risk_rate_on_cost",
+        "discount_rate",
+        "tax_rate",
+        "rounding_unit",
+        "rounding_mode"
+      ],
+      "properties": {
+        "overhead_rate_on_direct": {"type": "number", "minimum": 0},
+        "technical_fee_rate_on_direct_plus_overhead": {
+          "type": "number",
+          "minimum": 0
+        },
+        "profit_rate_on_cost": {"type": "number", "minimum": 0},
+        "risk_rate_on_cost": {"type": "number", "minimum": 0},
+        "discount_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "tax_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "rounding_unit": {"type": "integer", "minimum": 1},
+        "rounding_mode": {"enum": ["HALF_UP", "DOWN", "UP"]}
+      }
+    },
+    "estimation_method": {
+      "type": "object",
+      "required": [
+        "effort_unit",
+        "method",
+        "confidence_low_percent",
+        "confidence_high_percent",
+        "validity_days"
+      ],
+      "properties": {
+        "effort_unit": {"const": "M/M"},
+        "method": {"type": "string", "minLength": 1},
+        "confidence_low_percent": {"type": "number"},
+        "confidence_high_percent": {"type": "number"},
+        "validity_days": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

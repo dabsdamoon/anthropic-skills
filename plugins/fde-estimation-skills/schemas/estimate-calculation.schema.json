@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/fde-estimation/estimate-calculation.schema.json",
+  "title": "Deterministic Estimate Calculation",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "project",
+    "currency",
+    "generated_at",
+    "input_fingerprints",
+    "scenarios",
+    "fingerprint"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_type": {"const": "estimate-calculation"},
+    "project": {"type": "string", "minLength": 1},
+    "currency": {"type": "string", "minLength": 3},
+    "generated_at": {"type": "string", "minLength": 1},
+    "input_fingerprints": {"type": "object"},
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "scenario",
+          "effort_mm",
+          "direct_labor",
+          "overhead",
+          "technical_fee",
+          "profit",
+          "risk",
+          "discount",
+          "supply_amount",
+          "tax",
+          "total"
+        ]
+      }
+    },
+    "fingerprint": {"type": "string", "minLength": 1}
+  }
+}

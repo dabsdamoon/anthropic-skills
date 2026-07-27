@@ -1,0 +1,4 @@
+interface:
+  display_name: "Define Estimation Policy"
+  short_description: "Define reproducible rates, cost rules, and uncertainty"
+  default_prompt: "Use $define-estimation-policy to define reproducible pricing, tax, risk, and uncertainty rules."

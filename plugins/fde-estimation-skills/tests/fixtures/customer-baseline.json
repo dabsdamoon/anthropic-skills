@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "document_type": "customer-baseline",
+  "status": "final",
+  "project": {
+    "name": "Fixture Product",
+    "customer": "Fixture Customer",
+    "supplier": "Fixture Supplier",
+    "currency": "KRW"
+  },
+  "source_documents": [
+    {
+      "id": "SRC-001",
+      "title": "Initial request",
+      "kind": "email",
+      "location": "fixtures/initial-request.txt",
+      "source_date": "2026-01-01"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "OUT-001",
+      "title": "See consolidated results",
+      "problem": "Data is fragmented.",
+      "desired_result": "A user can see a consolidated result.",
+      "users": ["operator"],
+      "success_measures": ["approved sample reconciles"],
+      "provenance": {
+        "source_type": "customer_request",
+        "source_reference": "SRC-001",
+        "captured_at": "2026-01-01",
+        "confidence": "confirmed",
+        "customer_confirmed": true,
+        "evidence": ["SRC-001"]
+      }
+    }
+  ],
+  "explicit_scope": [
+    {
+      "id": "SCP-001",
+      "title": "Consolidated result",
+      "description": "Provide one consolidated result view.",
+      "included": true,
+      "provenance": {
+        "source_type": "customer_request",
+        "source_reference": "SRC-001",
+        "captured_at": "2026-01-01",
+        "confidence": "confirmed",
+        "customer_confirmed": true,
+        "evidence": ["SRC-001"]
+      }
+    }
+  ],
+  "constraints": [],
+  "assumptions": [],
+  "approvals": [
+    {
+      "id": "APR-001",
+      "subject": "Initial scope",
+      "status": "approved",
+      "reference": "SRC-001"
+    }
+  ]
+}

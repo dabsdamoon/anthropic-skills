@@ -1,0 +1,29 @@
+{
+  "name": "FDE Estimate Neutral",
+  "page": {
+    "size": "A4",
+    "margin_mm": [18, 18, 18, 18]
+  },
+  "typography": {
+    "primary": "Noto Sans CJK KR",
+    "fallback": ["Apple SD Gothic Neo", "Arial", "sans-serif"],
+    "title_pt": 22,
+    "heading_1_pt": 15,
+    "heading_2_pt": 12,
+    "body_pt": 9.5,
+    "line_height": 1.45
+  },
+  "colors": {
+    "ink": "#17202A",
+    "muted": "#65717E",
+    "primary": "#245B78",
+    "accent": "#DCEAF1",
+    "border": "#C7D1D8",
+    "paper": "#FFFFFF"
+  },
+  "tables": {
+    "header_fill": "#245B78",
+    "header_text": "#FFFFFF",
+    "alternate_fill": "#F5F8FA"
+  }
+}
