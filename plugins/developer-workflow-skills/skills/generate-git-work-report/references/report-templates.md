@@ -4,7 +4,8 @@
 
 Use this order unless the user's submission format requires another:
 
-1. Document identity and evidence baseline.
+1. Document identity, report creation time with UTC offset, filename stamp, and
+   evidence baseline.
 2. Project purpose and delivery scope.
 3. Reporting period and explicit exclusions.
 4. Major milestones grouped by user or operational outcome.
@@ -39,7 +40,8 @@ table, timeline, or grouped narrative when it explains progression better.
 
 Use this order:
 
-1. Evidence snapshot and collection command.
+1. Report creation time with UTC offset, filename stamp, evidence snapshot, and
+   collection command.
 2. Completeness and repository-state warnings.
 3. Aggregate metrics and metric definitions.
 4. Chronological entries grouped by reporting-zone date.
@@ -84,6 +86,8 @@ than one meaningful content block.
 
 ## Writing rules
 
+- For Korean reports, apply the narrative-only `humanize-korean` gate defined
+  in `SKILL.md` before canonical verification.
 - Label statements as fact, interpretation, or user-provided context when the
   distinction is material.
 - Prefer exact dates and revision names over words such as "recently".
