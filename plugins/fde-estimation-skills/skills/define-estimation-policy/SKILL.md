@@ -10,16 +10,20 @@ Never hardcode a current market rate without its source and date.
 
 ## Workflow
 
-1. Read `../../references/scenario-and-calculation-rules.md` completely.
-2. Read `references/policy-contract.md` completely.
-3. Determine jurisdiction, currency, locale, effective period, estimate
-   maturity, and permitted commercial model.
-4. Collect official or primary role-rate sources. When current rates matter,
+1. Read `../../references/interactive-review-protocol.md` completely.
+2. Confirm GATE-0 is complete. If the value question or product boundary is
+   unclear, ask the user and wait before choosing a policy.
+3. Read `../../references/scenario-and-calculation-rules.md` completely.
+4. Read `references/policy-contract.md` completely.
+5. Run GATE-3. Ask the user for jurisdiction, currency, locale, effective
+   period, estimate maturity, commercial model, and every user-owned cost rule.
+   Do not infer a default from the repository or silently choose a benchmark.
+6. Collect official or primary role-rate sources. When current rates matter,
    verify them from the source at execution time and record retrieval date.
-5. Add market benchmarks only as cross-checks; do not present a market listing
+7. Add market benchmarks only as cross-checks; do not present a market listing
    as a binding rate.
-6. Define role IDs and monthly rates. Keep role mapping explicit.
-7. Set every cost component explicitly, including zero values:
+8. Define role IDs and monthly rates. Keep role mapping explicit.
+9. Set every cost component explicitly, including zero values:
    - overhead;
    - technical fee;
    - profit;
@@ -27,10 +31,13 @@ Never hardcode a current market rate without its source and date.
    - discount;
    - tax;
    - rounding.
-8. Define confidence range, re-estimation triggers, and validity period.
-9. Create `estimation-policy.yaml` using JSON-compatible YAML and
-   `estimation-policy.md` for human review.
-10. Validate:
+10. Define confidence range, re-estimation triggers, and validity period.
+11. Create draft `estimation-policy.yaml` using JSON-compatible YAML and
+    `estimation-policy.md` with `review.status: pending`.
+12. Present the full policy, rate sources, and arithmetic order. Wait for the
+    user or identified estimate owner to approve or correct it and record the
+    real review reference.
+13. Validate only after the review is approved:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
@@ -53,4 +60,5 @@ python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
 ## Completion gate
 
 Stop finalization when a priced role lacks a dated source or when the arithmetic
-order is ambiguous.
+order is ambiguous. If a user-owned value is unanswered, keep the policy in
+draft; zero is valid only when explicitly selected.

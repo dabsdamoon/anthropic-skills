@@ -2,6 +2,10 @@
 
 Follow `../../../schemas/scope-traceability.schema.json`.
 
+Initialize `review.status` as `pending`. An approved review must identify the
+reviewer, time, and source response covering scope classifications and M/M
+allocations.
+
 Use identifier prefix `TRC-`.
 
 ## Classification decision

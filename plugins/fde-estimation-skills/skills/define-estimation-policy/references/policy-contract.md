@@ -2,6 +2,10 @@
 
 Follow `../../../schemas/estimation-policy.schema.json`.
 
+Initialize `review.status` as `pending`. An approved review must identify the
+reviewer, time, and source response covering the complete policy and arithmetic
+order.
+
 Use identifier prefixes:
 
 - rate source: `RATE-`

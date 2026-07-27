@@ -2,6 +2,12 @@
   "schema_version": "1.0",
   "document_type": "scope-traceability",
   "status": "final",
+  "review": {
+    "status": "approved",
+    "reviewed_by": "Fixture Estimate Owner",
+    "reviewed_at": "2026-01-05T12:00:00Z",
+    "reference": "scope-effort-review-2026-01-05"
+  },
   "project": {"name": "Fixture Product"},
   "items": [
     {

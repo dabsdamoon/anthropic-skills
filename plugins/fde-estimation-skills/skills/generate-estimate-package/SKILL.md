@@ -10,11 +10,17 @@ totals independently in prose.
 
 ## Workflow
 
-1. Read `../../references/evidence-and-claim-rules.md` completely.
-2. Read `../../references/scenario-and-calculation-rules.md` completely.
-3. Read `references/document-architecture.md` completely.
-4. Require all five canonical inputs in final status.
-5. Validate the complete input package:
+1. Read `../../references/interactive-review-protocol.md` completely.
+2. Read `../../references/evidence-and-claim-rules.md` completely.
+3. Read `../../references/scenario-and-calculation-rules.md` completely.
+4. Read `references/document-architecture.md` completely.
+5. Run GATE-5. Require all five canonical inputs in final status and approved
+   human review records for customer baseline, field discovery, estimation
+   policy, and scope traceability.
+6. If a review or material decision is missing, ask the responsible person and
+   wait. Deliver a readiness summary and drafts when no answer is available; do
+   not calculate or render monetary documents.
+7. Validate the complete input package:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
@@ -28,8 +34,8 @@ python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
   --manifest "$OUTPUT_DIR/project-estimate-manifest.yaml"
 ```
 
-6. Stop on validation errors. Do not repair source claims in the final document.
-7. Calculate all scenarios:
+8. Stop on validation errors. Do not repair source claims in the final document.
+9. Calculate all scenarios:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/calculate_estimate.py" \
@@ -39,7 +45,7 @@ python3 "$PLUGIN_DIR/scripts/calculate_estimate.py" \
   --verification "$OUTPUT_DIR/calculation-verification.json"
 ```
 
-8. Render the canonical Markdown family:
+10. Render the canonical Markdown family:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/render_estimate_package.py" \
@@ -52,9 +58,9 @@ python3 "$PLUGIN_DIR/scripts/render_estimate_package.py" \
   --output-dir "$OUTPUT_DIR"
 ```
 
-9. Improve narrative clarity without changing fingerprint markers, scenario
+11. Improve narrative clarity without changing fingerprint markers, scenario
    names, amounts, evidence status, or the legal caution.
-10. Verify the package:
+12. Verify the package:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/verify_estimate_package.py" \
@@ -85,4 +91,5 @@ deliver the verified Markdown package and state the limitation.
 - Never add independent scenarios into one amount due.
 - Describe a proposed change-adjustment as a negotiation request.
 - Keep unverified assumptions and re-estimation triggers visible.
+- Do not use `draft` status as permission to invent missing commercial inputs.
 - Require calculation and package verification to pass before delivery.

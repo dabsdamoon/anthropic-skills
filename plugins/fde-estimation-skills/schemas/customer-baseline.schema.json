@@ -7,6 +7,7 @@
     "schema_version",
     "document_type",
     "status",
+    "review",
     "project",
     "source_documents",
     "outcomes",
@@ -19,6 +20,7 @@
     "schema_version": {"const": "1.0"},
     "document_type": {"const": "customer-baseline"},
     "status": {"enum": ["draft", "final"]},
+    "review": {"$ref": "#/$defs/humanReview"},
     "project": {
       "type": "object",
       "required": ["name"],
@@ -56,6 +58,17 @@
     }
   },
   "$defs": {
+    "humanReview": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["pending", "approved", "rejected"]},
+        "reviewed_by": {"type": "string"},
+        "reviewed_at": {"type": "string"},
+        "reference": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
     "provenance": {
       "type": "object",
       "required": [

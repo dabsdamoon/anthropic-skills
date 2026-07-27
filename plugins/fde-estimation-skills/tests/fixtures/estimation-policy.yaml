@@ -2,6 +2,12 @@
   "schema_version": "1.0",
   "document_type": "estimation-policy",
   "status": "final",
+  "review": {
+    "status": "approved",
+    "reviewed_by": "Fixture Estimate Owner",
+    "reviewed_at": "2026-01-04T12:00:00Z",
+    "reference": "estimate-policy-review-2026-01-04"
+  },
   "currency": "KRW",
   "locale": "ko-KR",
   "valid_from": "2026-01-01",

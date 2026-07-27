@@ -23,6 +23,59 @@ def run_script(name: str, *args: object) -> subprocess.CompletedProcess[str]:
 
 
 class EstimateWorkflowTests(unittest.TestCase):
+    def test_final_human_owned_artifacts_require_approved_review(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            cases = [
+                ("customer-baseline", "customer-baseline.json"),
+                ("field-discovery", "field-discovery.json"),
+                ("estimation-policy", "estimation-policy.yaml"),
+                ("scope-traceability", "scope-traceability.json"),
+            ]
+            for option, fixture_name in cases:
+                with self.subTest(document_type=option):
+                    unreviewed = json.loads((FIXTURES / fixture_name).read_text())
+                    unreviewed.pop("review")
+                    unreviewed_path = output / f"unreviewed-{option}.json"
+                    unreviewed_path.write_text(
+                        json.dumps(unreviewed),
+                        encoding="utf-8",
+                    )
+                    verification_path = output / f"{option}-verification.json"
+
+                    result = run_script(
+                        "validate_input_package.py",
+                        f"--{option}",
+                        unreviewed_path,
+                        "--final",
+                        "--output",
+                        verification_path,
+                    )
+
+                    self.assertNotEqual(result.returncode, 0)
+                    verification = json.loads(verification_path.read_text())
+                    self.assertTrue(
+                        any(
+                            "requires approved human review" in error
+                            for error in verification["errors"]
+                        )
+                    )
+
+    def test_all_skills_use_the_shared_interactive_review_protocol(self) -> None:
+        protocol_path = PLUGIN_DIR / "references" / "interactive-review-protocol.md"
+        protocol = protocol_path.read_text()
+        for gate in range(6):
+            self.assertIn(f"GATE-{gate}", protocol)
+
+        skill_paths = sorted((PLUGIN_DIR / "skills").glob("*/SKILL.md"))
+        self.assertEqual(len(skill_paths), 6)
+        for skill_path in skill_paths:
+            with self.subTest(skill=skill_path.parent.name):
+                self.assertIn(
+                    "../../references/interactive-review-protocol.md",
+                    skill_path.read_text(),
+                )
+
     def test_git_collector_creates_draft_without_author_email_or_effort_claim(
         self,
     ) -> None:

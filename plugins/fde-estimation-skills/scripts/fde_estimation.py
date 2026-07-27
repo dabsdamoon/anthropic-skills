@@ -39,6 +39,7 @@ ROUNDING = {
     "DOWN": ROUND_DOWN,
     "UP": ROUND_UP,
 }
+REVIEW_STATUSES = {"pending", "approved", "rejected"}
 
 
 @dataclass
@@ -241,12 +242,45 @@ def _validate_document_header(
         report.error(f"{expected_type}: --final requires status 'final'")
 
 
+def _validate_human_review(
+    document: dict[str, Any],
+    document_type: str,
+    final: bool,
+    report: ValidationReport,
+) -> None:
+    path = f"{document_type}.review"
+    review = document.get("review")
+    if not isinstance(review, dict):
+        if final:
+            report.error(f"{path}: final artifact requires approved human review")
+        else:
+            report.error(f"{path}: must be an object")
+        return
+
+    status = review.get("status")
+    if status not in REVIEW_STATUSES:
+        report.error(f"{path}.status: unsupported value '{status}'")
+    if not final:
+        return
+    if status != "approved":
+        report.error(f"{path}: final artifact requires approved human review")
+        return
+    for field_name in ("reviewed_by", "reviewed_at", "reference"):
+        value = review.get(field_name)
+        if not isinstance(value, str) or not value.strip():
+            report.error(
+                f"{path}.{field_name}: approved human review requires "
+                "a non-empty value"
+            )
+
+
 def validate_customer_baseline(
     document: dict[str, Any],
     final: bool,
     report: ValidationReport,
 ) -> dict[str, set[str]]:
     _validate_document_header(document, "customer-baseline", final, report)
+    _validate_human_review(document, "customer-baseline", final, report)
     _require(
         document,
         [
@@ -312,6 +346,7 @@ def validate_field_discovery(
     outcome_ids: set[str] | None = None,
 ) -> dict[str, set[str]]:
     _validate_document_header(document, "field-discovery", final, report)
+    _validate_human_review(document, "field-discovery", final, report)
     _require(
         document,
         ["project", "discoveries", "solution_decisions", "open_questions"],
@@ -467,6 +502,7 @@ def validate_estimation_policy(
     report: ValidationReport,
 ) -> dict[str, set[str]]:
     _validate_document_header(document, "estimation-policy", final, report)
+    _validate_human_review(document, "estimation-policy", final, report)
     _require(
         document,
         [
@@ -583,6 +619,7 @@ def validate_traceability(
     role_ids: set[str] | None = None,
 ) -> dict[str, set[str]]:
     _validate_document_header(document, "scope-traceability", final, report)
+    _validate_human_review(document, "scope-traceability", final, report)
     _require(
         document,
         ["project", "items", "unresolved_questions"],

@@ -4,6 +4,10 @@
 
 Follow `../../../schemas/field-discovery.schema.json`.
 
+Initialize `review.status` as `pending`. An approved review must identify the
+reviewer, time, and source response covering the material discoveries and
+solution decisions.
+
 Use these identifier prefixes:
 
 - discovery: `DSC-`

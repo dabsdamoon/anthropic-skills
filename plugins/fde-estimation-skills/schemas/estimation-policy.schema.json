@@ -7,6 +7,7 @@
     "schema_version",
     "document_type",
     "status",
+    "review",
     "currency",
     "locale",
     "valid_from",
@@ -20,6 +21,7 @@
     "schema_version": {"const": "1.0"},
     "document_type": {"const": "estimation-policy"},
     "status": {"enum": ["draft", "final"]},
+    "review": {"$ref": "#/$defs/humanReview"},
     "currency": {"type": "string", "minLength": 3},
     "locale": {"type": "string", "minLength": 2},
     "valid_from": {"type": "string", "minLength": 1},
@@ -92,6 +94,19 @@
         "confidence_high_percent": {"type": "number"},
         "validity_days": {"type": "integer", "minimum": 1}
       }
+    }
+  },
+  "$defs": {
+    "humanReview": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["pending", "approved", "rejected"]},
+        "reviewed_by": {"type": "string"},
+        "reviewed_at": {"type": "string"},
+        "reference": {"type": "string"}
+      },
+      "additionalProperties": false
     }
   }
 }

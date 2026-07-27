@@ -6,6 +6,10 @@ Write two files from the same source set.
 
 Follow `../../../schemas/customer-baseline.schema.json`.
 
+Initialize `review.status` as `pending`. Set it to `approved` and record
+`reviewed_by`, `reviewed_at`, and `reference` only after the reviewer has seen
+the summarized baseline and responded.
+
 Use these identifier prefixes:
 
 - source document: `SRC-`

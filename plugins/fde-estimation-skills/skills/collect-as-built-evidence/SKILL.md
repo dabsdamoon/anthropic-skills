@@ -10,11 +10,12 @@ commercial entitlement.
 
 ## Workflow
 
-1. Define repository path, revision, reporting boundary, project name, and
+1. Read `../../references/interactive-review-protocol.md` completely.
+2. Define repository path, revision, reporting boundary, project name, and
    output directory. Do not silently include all refs or the working tree.
-2. Read `../../references/evidence-and-claim-rules.md` completely.
-3. Read `references/interpretation-and-output.md` completely.
-4. Reuse a compatible `git-evidence.json` from
+3. Read `../../references/evidence-and-claim-rules.md` completely.
+4. Read `references/interpretation-and-output.md` completely.
+5. Reuse a compatible `git-evidence.json` from
    `generate-git-work-report` when the user supplies one. Otherwise collect a
    narrow snapshot:
 
@@ -26,21 +27,25 @@ python3 "$PLUGIN_DIR/scripts/collect_git_evidence.py" \
   --output "$OUTPUT_DIR/as-built-evidence.json"
 ```
 
-5. Inspect README, project guidance, ADRs, domain notes, source modules, tests,
+6. Inspect README, project guidance, ADRs, domain notes, source modules, tests,
    deployment files, release notes, issue or PR context, and substantive merge
    messages.
-6. Add implementation items to the draft. For each item record:
+7. Add implementation items to the draft. For each item record:
    - what was delivered;
    - `new`, `modified`, or `reused`;
    - delivery status;
    - related outcome and decision IDs;
    - stable code, test, document, deployment, or review evidence;
    - known verification and limitations.
-7. Do not derive M/M from commits. Add external work or time records only as
+8. Do not derive M/M from commits. Add external work or time records only as
    separately identified evidence.
-8. Create `as-built-evidence.md` from the same implementation items.
-9. Set `status` to `final` and validate against the baseline and discovery
+9. Create `as-built-evidence.md` from the same implementation items.
+10. Set `status` to `final` and validate against the baseline and discovery
    inputs when available.
+
+Read-only collection may run before GATE-0, but it must stop at evidence. Do not
+select an estimate scenario, infer customer value or approval, or choose rates,
+M/M, margin, risk, or commercial entitlement from repository contents.
 
 ## Safety
 
