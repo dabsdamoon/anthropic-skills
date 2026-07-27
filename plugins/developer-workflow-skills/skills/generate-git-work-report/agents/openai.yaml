@@ -1,4 +1,4 @@
 interface:
   display_name: "Git Work Report"
-  short_description: "Git 근거 기반 고품질 수행이력·Work Log 문서 생성"
-  default_prompt: "Use $generate-git-work-report to create evidence-backed external and internal work reports, matching any supplied DOCX/PDF reference with polished office-document QA."
+  short_description: "작성 시각이 기록된 Git 근거 기반 수행이력·Work Log 생성"
+  default_prompt: "Use $generate-git-work-report to create timestamped, evidence-backed external and internal work reports. Apply conservative humanize-korean editing to Korean narrative only, preserve the evidence contract, and match any supplied DOCX/PDF reference with polished office-document QA."

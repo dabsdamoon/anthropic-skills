@@ -37,8 +37,8 @@ geometry into a reference-first document.
 
 ## 2. Distill the retained reference
 
-Keep the reference unchanged. Render and inspect every page, then write a
-task-local `artifact.md` containing:
+Keep the reference unchanged. Render and inspect every page, then write the
+task-local stamped template audit at `$TEMPLATE_AUDIT_PATH` containing:
 
 - Absolute reference path, SHA-256, format, and page count.
 - Page geometry and section behavior.
@@ -69,10 +69,14 @@ Do not perform a linear Markdown-to-office conversion.
 Use versioned, aligned basenames such as:
 
 ```text
-Project_프로젝트_수행이력_외부요약_v0.2_draft.md
-Project_프로젝트_수행이력_외부요약_v0.2_draft.docx
-Project_프로젝트_수행이력_외부요약_v0.2_draft.pdf
+project-external-project-history-20260727T104512+0900.md
+project-external-project-history-20260727T104512+0900.docx
+project-external-project-history-20260727T104512+0900.pdf
 ```
+
+The timestamp is the package-wide `REPORT_STAMP` captured in the reporting
+timezone. Do not derive separate timestamps from DOCX conversion or PDF export
+times.
 
 ## 4. Build and render
 

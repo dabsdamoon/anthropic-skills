@@ -126,7 +126,7 @@ These skills are original to this marketplace — not available in Anthropic's o
 | **prompt-optimizer** | Reduces token usage and improves cache efficiency for production LLM prompts |
 | **subagent-creator** | Generates repository-specific Claude Code subagents tailored to your tech stack |
 | **debugging-retrospective** | Summarizes debugging sessions into educational postmortems with lessons learned |
-| **generate-git-work-report** | Produces external and internal Git work reports from a verifiable evidence snapshot, with reference-matched DOCX/PDF authoring and full-page QA gates |
+| **generate-git-work-report** | Produces timestamped external and internal Git work reports from a verifiable evidence snapshot, with conservative Korean narrative editing and reference-matched DOCX/PDF QA |
 | **gcloud-direnv-setup** | Configures per-directory GCP credentials with direnv for multi-account setups |
 | **refactoring-resistant-tests** | Builds behavior-focused tests that survive internal refactors and use stable observable boundaries |
 
