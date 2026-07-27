@@ -281,11 +281,87 @@ def main() -> int:
         f"({as_built['git_evidence']['commit_count']} commits)",
         f"- Git fingerprint: `{as_built['git_evidence']['fingerprint']}`",
         "",
-        "## 범위 조정",
+        "## 인력 구성 및 단가 근거",
         "",
-        "| ID | 항목 | 분류 | 기준선 | 현장 발견 | 구현 증빙 |",
-        "|---|---|---|---|---|---|",
+        "| 역할 ID | 직군 | 역할 | 숙련도 | 사용자 확인 | 산정 방식 | "
+        "월 단가 | 출처 |",
+        "|---|---|---|---|---|---|---:|---|",
     ]
+    for role in policy["roles"]:
+        basis_lines.append(
+            "| {id} | {occupation} | {title} | {seniority} | {confirmed} | "
+            "{method} | {rate} | {sources} |".format(
+                id=cell(role["id"]),
+                occupation=cell(role["occupation"]),
+                title=cell(role["title"]),
+                seniority=cell(role["seniority"]),
+                confirmed="예" if role["seniority_confirmed"] else "아니오",
+                method=cell(role["rate_method"]),
+                rate=won(role["monthly_rate"], currency),
+                sources=cell(", ".join(role["source_ids"])),
+            )
+        )
+    basis_lines.extend(["", "### 단가 선택 근거", ""])
+    basis_lines.extend(
+        f"- {cell(role['id'])}: {cell(role['rate_rationale'])}"
+        for role in policy["roles"]
+    )
+    basis_lines.extend(
+        [
+            "",
+            "### 단가 관측과 정규화",
+            "",
+            "| 역할 ID | 출처 ID | 관측값 | 단위 | 정규화 월 단가 | 변환 근거 |",
+            "|---|---|---:|---|---:|---|",
+        ]
+    )
+    for role in policy["roles"]:
+        for evidence in role["rate_evidence"]:
+            basis_lines.append(
+                "| {role} | {source} | {observed} | {unit} | {normalized} | "
+                "{note} |".format(
+                    role=cell(role["id"]),
+                    source=cell(evidence["source_id"]),
+                    observed=won(evidence["observed_value"], currency),
+                    unit=cell(evidence["observed_unit"]),
+                    normalized=won(
+                        evidence["normalized_monthly_rate"],
+                        currency,
+                    ),
+                    note=cell(evidence["normalization_note"]),
+                )
+            )
+    basis_lines.extend(
+        [
+            "",
+            "### 단가 출처",
+            "",
+            "| 출처 ID | 발행기관 | 유형 | 명시 숙련도 | 보상 범위 | 조회일 | 위치 |",
+            "|---|---|---|---|---|---|---|",
+        ]
+    )
+    for source in policy["rate_sources"]:
+        basis_lines.append(
+            "| {id} | {publisher} | {type} | {levels} | {scope} | "
+            "{retrieved} | {location} |".format(
+                id=cell(source["id"]),
+                publisher=cell(source["publisher"]),
+                type=cell(source["source_type"]),
+                levels=cell(", ".join(source["seniority_levels"]) or "없음"),
+                scope=cell(source["compensation_scope"]),
+                retrieved=cell(source["retrieved_at"]),
+                location=cell(source["location"]),
+            )
+        )
+    basis_lines.extend(
+        [
+            "",
+            "## 범위 조정",
+            "",
+            "| ID | 항목 | 분류 | 기준선 | 현장 발견 | 구현 증빙 |",
+            "|---|---|---|---|---|---|",
+        ]
+    )
     for item in traceability["items"]:
         basis_lines.append(
             "| {id} | {title} | {classification} | {baseline} | {discovery} | "
@@ -310,17 +386,18 @@ def main() -> int:
             [
                 f"### {scenario['scenario']} — {SCENARIO_LABELS[scenario['scenario']]}",
                 "",
-                "| 범위 | 분류 | 역할 | 공수 | 월 단가 | 직접인건비 | 상태 |",
-                "|---|---|---|---:|---:|---:|---|",
+                "| 범위 | 분류 | 역할 | 숙련도 | 공수 | 월 단가 | 직접인건비 | 상태 |",
+                "|---|---|---|---|---:|---:|---:|---|",
             ]
         )
         for line in scenario["lines"]:
             basis_lines.append(
-                "| {scope} | {classification} | {role} | {effort} | {rate} | "
-                "{direct} | {status} |".format(
+                "| {scope} | {classification} | {role} | {seniority} | "
+                "{effort} | {rate} | {direct} | {status} |".format(
                     scope=line["scope_title"].replace("|", "\\|"),
                     classification=line["classification"],
                     role=line["role_title"].replace("|", "\\|"),
+                    seniority=line["role_seniority"],
                     effort=line["effort_mm"],
                     rate=won(line["monthly_rate"], currency),
                     direct=won(line["direct_labor"], currency),

@@ -10,30 +10,38 @@ derive it automatically from code volume or the existence of a feature.
 
 ## Workflow
 
-1. Require the four canonical inputs or state which are missing:
+1. Read `../../references/interactive-review-protocol.md` completely.
+2. Require the four canonical inputs or state which are missing:
    - `customer-baseline.json`;
    - `field-discovery.json`;
    - `as-built-evidence.json`;
    - `estimation-policy.yaml`.
-2. Read `../../references/evidence-and-claim-rules.md` completely.
-3. Read `../../references/scenario-and-calculation-rules.md` completely.
-4. Read `references/reconciliation-contract.md` completely.
-5. Run the input validator in final mode before classifying scope.
-6. Create one trace item for each commercially meaningful capability or work
+3. Read `../../references/evidence-and-claim-rules.md` completely.
+4. Read `../../references/scenario-and-calculation-rules.md` completely.
+5. Read `references/reconciliation-contract.md` completely.
+6. Run the input validator in final mode before classifying scope. Return to an
+   earlier interaction gate when an input lacks its approved review.
+7. Create one trace item for each commercially meaningful capability or work
    product. Map baseline, discovery, and implementation IDs.
-7. Classify each item as exactly one of:
+8. Classify each item as exactly one of:
    - `explicit-baseline`;
    - `derived-necessary`;
    - `field-validated`;
    - `supplier-initiated`;
    - `future-option`;
    - `unresolved`.
-8. Explain the rationale and customer-confirmation state.
-9. Add scenario allocations by role and M/M. Keep replacement, remaining, and
-   change-adjustment allocations independent.
-10. Set unpriced or excluded allocations to `include_in_estimate: false`.
-11. Keep a proposed change separate from an approved change.
-12. Create `scope-traceability.json`, then render and verify:
+9. Explain the rationale and customer-confirmation state.
+10. Add scenario allocations by reviewed role-level ID and M/M. Do not collapse
+    entry, junior, and senior contributors into one average-rate role. Keep
+    replacement, remaining, and change-adjustment allocations independent.
+11. Set unpriced or excluded allocations to `include_in_estimate: false`.
+12. Keep a proposed change separate from an approved change.
+13. Create draft `scope-traceability.json` with `review.status: pending`.
+14. Run GATE-4. Present the classifications, role, seniority, M/M allocations,
+    exclusions, assumptions, and unresolved price effects. Wait for the user or
+    identified estimate owner to review them; apply corrections and record the
+    real review.
+15. After approval, render and verify:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/build_scope_traceability.py" \
@@ -54,3 +62,4 @@ python3 "$PLUGIN_DIR/scripts/build_scope_traceability.py" \
 - Warn rather than silently bill when supplier-initiated or unresolved work is
   placed in change-adjustment.
 - Stop when completed and remaining effort cannot be separated.
+- Do not calculate money while scope or effort review is pending.

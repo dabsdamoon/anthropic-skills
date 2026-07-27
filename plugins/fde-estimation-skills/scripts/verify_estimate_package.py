@@ -49,6 +49,34 @@ def main() -> int:
             errors.append(f"{name}: missing calculation fingerprint")
         if "[TODO" in text or "{{" in text:
             errors.append(f"{name}: unresolved placeholder")
+    basis = documents.get("basis-of-estimate.md", "")
+    for heading in (
+        "## 인력 구성 및 단가 근거",
+        "### 단가 관측과 정규화",
+        "### 단가 출처",
+    ):
+        if heading not in basis:
+            errors.append(f"basis-of-estimate.md: missing section '{heading}'")
+    for scenario in calculation["scenarios"]:
+        for line in scenario.get("lines", []):
+            for field_name in ("role_seniority", "rate_method"):
+                value = line.get(field_name)
+                if not value:
+                    errors.append(
+                        f"calculation {scenario['scenario']}: missing "
+                        f"{field_name} for role {line.get('role_id')}"
+                    )
+                elif str(value) not in basis:
+                    errors.append(
+                        f"basis-of-estimate.md: missing {field_name} "
+                        f"'{value}' for role {line.get('role_id')}"
+                    )
+            for source_id in line.get("rate_source_ids", []):
+                if source_id not in basis:
+                    errors.append(
+                        f"basis-of-estimate.md: missing rate source "
+                        f"'{source_id}' for role {line.get('role_id')}"
+                    )
     for scenario in calculation["scenarios"]:
         total = formatted(scenario["total"])
         if total not in documents.get("budgetary-estimate.md", ""):

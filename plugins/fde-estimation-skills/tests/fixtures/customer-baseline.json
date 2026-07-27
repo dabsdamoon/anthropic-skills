@@ -2,6 +2,12 @@
   "schema_version": "1.0",
   "document_type": "customer-baseline",
   "status": "final",
+  "review": {
+    "status": "approved",
+    "reviewed_by": "Fixture Customer Sponsor",
+    "reviewed_at": "2026-01-01T12:00:00Z",
+    "reference": "meeting-2026-01-01"
+  },
   "project": {
     "name": "Fixture Product",
     "customer": "Fixture Customer",

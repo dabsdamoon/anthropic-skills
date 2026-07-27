@@ -1,22 +1,22 @@
 {
   "name": "fde-estimation-skills",
-  "version": "0.1.0",
-  "description": "Evidence-backed FDE discovery, scope reconciliation, and software estimate document workflows",
+  "version": "0.2.0",
+  "description": "Interactive, evidence-backed FDE discovery, staffing, scope reconciliation, and software estimate document workflows",
   "author": {
     "name": "dabsdamoon"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "FDE Estimation Skills",
-    "shortDescription": "Turn field discovery and delivery evidence into defensible estimates",
-    "longDescription": "Capture customer outcomes, document Forward Deployed Engineering discoveries, collect as-built evidence, define pricing policy, reconcile scope deltas, and generate consistent budgetary estimates and basis-of-estimate reports.",
+    "shortDescription": "Co-create defensible estimates through explicit review gates",
+    "longDescription": "Interactively confirm customer outcomes, Forward Deployed Engineering discoveries, job families, seniority, rate evidence, scope classifications, and effort before generating consistent budgetary estimates and basis-of-estimate reports.",
     "developerName": "dabsdamoon",
     "category": "Productivity",
     "capabilities": ["Read", "Write", "Execute"],
     "defaultPrompt": [
-      "Build a traceable baseline from these customer request documents.",
-      "Map this repository and field-discovery record into a scope delta.",
-      "Generate a budgetary estimate and its basis from the evidence package."
+      "Interview me to build and review a traceable baseline from these customer request documents.",
+      "Review this repository and discuss the necessary job families, seniority, scope delta, and M/M with me.",
+      "Guide me through staffing levels, rate evidence, and required decisions before generating a budgetary estimate and its basis."
     ]
   }
 }

@@ -2,30 +2,116 @@
   "schema_version": "1.0",
   "document_type": "estimation-policy",
   "status": "final",
+  "review": {
+    "status": "approved",
+    "reviewed_by": "Fixture Estimate Owner",
+    "reviewed_at": "2026-01-04T12:00:00Z",
+    "reference": "estimate-policy-review-2026-01-04"
+  },
   "currency": "KRW",
   "locale": "ko-KR",
   "valid_from": "2026-01-01",
   "valid_until": "2026-12-31",
   "rate_sources": [
     {
-      "id": "RATE-001",
-      "title": "Fixture role rates",
-      "location": "fixture://role-rates",
-      "retrieved_at": "2026-01-01"
+      "id": "RATE-KOSA",
+      "title": "Fixture KOSA occupation averages",
+      "publisher": "Fixture KOSA",
+      "location": "fixture://kosa-occupation-averages",
+      "retrieved_at": "2026-01-01",
+      "source_type": "kosa",
+      "seniority_levels": [],
+      "compensation_scope": "Monthly employer labor cost"
+    },
+    {
+      "id": "RATE-GOV",
+      "title": "Fixture government occupation and rank wages",
+      "publisher": "Fixture Labor Ministry",
+      "location": "fixture://government-role-level-wages",
+      "retrieved_at": "2026-01-02",
+      "source_type": "government-statistics",
+      "seniority_levels": ["entry", "junior", "senior"],
+      "compensation_scope": "Monthly gross wage"
+    },
+    {
+      "id": "RATE-SURVEY",
+      "title": "Fixture role and experience salary survey",
+      "publisher": "Fixture Salary Survey",
+      "location": "fixture://role-experience-survey",
+      "retrieved_at": "2026-01-02",
+      "source_type": "salary-survey",
+      "seniority_levels": ["entry", "junior", "senior"],
+      "compensation_scope": "Annual base salary normalized to monthly wage"
     }
   ],
   "roles": [
     {
       "id": "ROLE-BA",
       "title": "Business Analyst",
+      "occupation": "Business analysis",
+      "seniority": "senior",
+      "seniority_confirmed": true,
       "monthly_rate": 1000,
-      "source_id": "RATE-001"
+      "rate_method": "web-estimate",
+      "source_ids": ["RATE-KOSA", "RATE-GOV", "RATE-SURVEY"],
+      "rate_evidence": [
+        {
+          "source_id": "RATE-KOSA",
+          "observed_value": 1200,
+          "observed_unit": "monthly",
+          "normalized_monthly_rate": 1200,
+          "normalization_note": "Aggregate occupation cross-check only; not mapped to seniority."
+        },
+        {
+          "source_id": "RATE-GOV",
+          "observed_value": 1000,
+          "observed_unit": "monthly",
+          "normalized_monthly_rate": 1000,
+          "normalization_note": "Government senior-role monthly wage."
+        },
+        {
+          "source_id": "RATE-SURVEY",
+          "observed_value": 12000,
+          "observed_unit": "annual",
+          "normalized_monthly_rate": 1000,
+          "normalization_note": "Annual senior-role salary divided by 12."
+        }
+      ],
+      "rate_rationale": "Select 1,000 because both senior-specific web sources normalize to 1,000; retain KOSA only as an aggregate cross-check."
     },
     {
       "id": "ROLE-DEV",
       "title": "Application Developer",
+      "occupation": "Application software development",
+      "seniority": "junior",
+      "seniority_confirmed": true,
       "monthly_rate": 2000,
-      "source_id": "RATE-001"
+      "rate_method": "web-estimate",
+      "source_ids": ["RATE-KOSA", "RATE-GOV", "RATE-SURVEY"],
+      "rate_evidence": [
+        {
+          "source_id": "RATE-KOSA",
+          "observed_value": 2400,
+          "observed_unit": "monthly",
+          "normalized_monthly_rate": 2400,
+          "normalization_note": "Aggregate occupation cross-check only; not mapped to seniority."
+        },
+        {
+          "source_id": "RATE-GOV",
+          "observed_value": 2000,
+          "observed_unit": "monthly",
+          "normalized_monthly_rate": 2000,
+          "normalization_note": "Government junior-role monthly wage."
+        },
+        {
+          "source_id": "RATE-SURVEY",
+          "observed_value": 24000,
+          "observed_unit": "annual",
+          "normalized_monthly_rate": 2000,
+          "normalization_note": "Annual junior-role salary divided by 12."
+        }
+      ],
+      "rate_rationale": "Select 2,000 because both junior-specific web sources normalize to 2,000; retain KOSA only as an aggregate cross-check."
     }
   ],
   "cost_rules": {

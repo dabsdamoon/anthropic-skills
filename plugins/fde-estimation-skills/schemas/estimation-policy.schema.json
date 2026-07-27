@@ -7,6 +7,7 @@
     "schema_version",
     "document_type",
     "status",
+    "review",
     "currency",
     "locale",
     "valid_from",
@@ -20,6 +21,7 @@
     "schema_version": {"const": "1.0"},
     "document_type": {"const": "estimation-policy"},
     "status": {"enum": ["draft", "final"]},
+    "review": {"$ref": "#/$defs/humanReview"},
     "currency": {"type": "string", "minLength": 3},
     "locale": {"type": "string", "minLength": 2},
     "valid_from": {"type": "string", "minLength": 1},
@@ -28,12 +30,37 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "title", "location", "retrieved_at"],
+        "required": [
+          "id",
+          "title",
+          "publisher",
+          "location",
+          "retrieved_at",
+          "source_type",
+          "seniority_levels",
+          "compensation_scope"
+        ],
         "properties": {
           "id": {"type": "string", "minLength": 1},
           "title": {"type": "string", "minLength": 1},
+          "publisher": {"type": "string", "minLength": 1},
           "location": {"type": "string", "minLength": 1},
-          "retrieved_at": {"type": "string", "minLength": 1}
+          "retrieved_at": {"type": "string", "minLength": 1},
+          "source_type": {
+            "enum": [
+              "kosa",
+              "government-statistics",
+              "salary-survey",
+              "job-posting",
+              "customer-policy"
+            ]
+          },
+          "seniority_levels": {
+            "type": "array",
+            "items": {"enum": ["entry", "junior", "senior"]},
+            "uniqueItems": true
+          },
+          "compensation_scope": {"type": "string", "minLength": 1}
         }
       }
     },
@@ -41,12 +68,65 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "title", "monthly_rate", "source_id"],
+        "required": [
+          "id",
+          "title",
+          "occupation",
+          "seniority",
+          "seniority_confirmed",
+          "monthly_rate",
+          "rate_method",
+          "source_ids",
+          "rate_evidence",
+          "rate_rationale"
+        ],
         "properties": {
           "id": {"type": "string", "minLength": 1},
           "title": {"type": "string", "minLength": 1},
+          "occupation": {"type": "string", "minLength": 1},
+          "seniority": {"enum": ["entry", "junior", "senior"]},
+          "seniority_confirmed": {"type": "boolean"},
           "monthly_rate": {"type": "number", "minimum": 0},
-          "source_id": {"type": "string", "minLength": 1}
+          "rate_method": {
+            "enum": [
+              "kosa-seniority",
+              "web-estimate",
+              "customer-provided"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "rate_evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "source_id",
+                "observed_value",
+                "observed_unit",
+                "normalized_monthly_rate",
+                "normalization_note"
+              ],
+              "properties": {
+                "source_id": {"type": "string", "minLength": 1},
+                "observed_value": {"type": "number", "minimum": 0},
+                "observed_unit": {
+                  "enum": ["monthly", "annual", "daily", "hourly"]
+                },
+                "normalized_monthly_rate": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "normalization_note": {"type": "string", "minLength": 1}
+              }
+            }
+          },
+          "rate_rationale": {"type": "string", "minLength": 1}
         }
       }
     },
@@ -92,6 +172,19 @@
         "confidence_high_percent": {"type": "number"},
         "validity_days": {"type": "integer", "minimum": 1}
       }
+    }
+  },
+  "$defs": {
+    "humanReview": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["pending", "approved", "rejected"]},
+        "reviewed_by": {"type": "string"},
+        "reviewed_at": {"type": "string"},
+        "reference": {"type": "string"}
+      },
+      "additionalProperties": false
     }
   }
 }

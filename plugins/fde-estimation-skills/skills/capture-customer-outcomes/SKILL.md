@@ -10,25 +10,31 @@ a requirement they never approved.
 
 ## Workflow
 
-1. Define the source boundary: files, messages, interviews, quote, contract,
-   dates, and authorized stakeholders.
-2. Read `../../references/evidence-and-claim-rules.md` completely.
-3. Read `references/output-contract.md` completely.
-4. Preserve the customer's original wording in source records. Write editorial
+1. Read `../../references/interactive-review-protocol.md` completely.
+2. Run GATE-0. Ask what decision the estimate should support and what product
+   boundary it covers, explain relevant scenarios in plain language, and wait
+   for the user's response.
+3. Run GATE-1. Ask for the source boundary: files, messages, interviews, quote,
+   contract, dates, intended users, outcomes, and authorized stakeholders.
+4. Read `../../references/evidence-and-claim-rules.md` completely.
+5. Read `references/output-contract.md` completely.
+6. Preserve the customer's original wording in source records. Write editorial
    summaries separately.
-5. Extract:
+7. Extract:
    - problems and desired outcomes;
    - users and decisions the product should support;
    - explicit included and excluded scope;
    - constraints, customer-provided items, assumptions, and approvals;
    - measurable success criteria when the source provides them.
-6. Mark missing detail as an assumption or open issue. Do not fill it from the
+8. Mark missing detail as an assumption or open issue. Do not fill it from the
    implemented product.
-7. Create `customer-baseline.json` and `customer-baseline.md`.
-8. Set `status` to `draft` until every material claim has provenance and the
-   baseline has been reviewed. Set it to `final` only when ready for downstream
-   reconciliation.
-9. Validate the artifact:
+9. Create `customer-baseline.json` and `customer-baseline.md` with
+   `status: draft` and `review.status: pending`.
+10. Present the baseline, assumptions, and missing decisions. Wait for the user
+    or identified stakeholder to approve or correct it. Record the real review
+    reference; never fabricate approval metadata.
+11. Set both document and review status to final/approved only after that
+    response, then validate:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
@@ -50,3 +56,5 @@ directory before running the command.
   still be possible, but an additional-payment claim will be weaker.
 - Stop finalization when no customer source exists. Deliver a clearly labeled
   reconstruction draft instead.
+- If the user cannot review the baseline, stop with a readiness summary. Do not
+  continue into priced policy, effort allocation, or calculation.
