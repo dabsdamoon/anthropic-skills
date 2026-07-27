@@ -40,6 +40,20 @@ ROUNDING = {
     "UP": ROUND_UP,
 }
 REVIEW_STATUSES = {"pending", "approved", "rejected"}
+SENIORITY_LEVELS = {"entry", "junior", "senior"}
+RATE_SOURCE_TYPES = {
+    "kosa",
+    "government-statistics",
+    "salary-survey",
+    "job-posting",
+    "customer-policy",
+}
+RATE_METHODS = {"kosa-seniority", "web-estimate", "customer-provided"}
+WEB_RATE_SOURCE_TYPES = {
+    "government-statistics",
+    "salary-survey",
+    "job-posting",
+}
 
 
 @dataclass
@@ -521,43 +535,232 @@ def validate_estimation_policy(
     source_ids = _validate_ids(
         document.get("rate_sources"), "estimation-policy.rate_sources", report
     )
+    source_by_id: dict[str, dict[str, Any]] = {}
     role_ids = _validate_ids(document.get("roles"), "estimation-policy.roles", report)
     for index, source in enumerate(document.get("rate_sources") or []):
         if not isinstance(source, dict):
             continue
+        path = f"estimation-policy.rate_sources[{index}]"
         _require(
             source,
-            ["id", "title", "location", "retrieved_at"],
-            f"estimation-policy.rate_sources[{index}]",
+            [
+                "id",
+                "title",
+                "publisher",
+                "location",
+                "retrieved_at",
+                "source_type",
+                "seniority_levels",
+                "compensation_scope",
+            ],
+            path,
             report,
         )
-        if not source.get("retrieved_at"):
-            report.error(
-                f"estimation-policy.rate_sources[{index}].retrieved_at: required"
-            )
+        source_id = source.get("id")
+        if isinstance(source_id, str) and source_id:
+            source_by_id[source_id] = source
+        for field_name in (
+            "title",
+            "publisher",
+            "location",
+            "retrieved_at",
+            "compensation_scope",
+        ):
+            value = source.get(field_name)
+            if not isinstance(value, str) or not value.strip():
+                report.error(f"{path}.{field_name}: must be a non-empty string")
+        source_type = source.get("source_type")
+        if source_type not in RATE_SOURCE_TYPES:
+            report.error(f"{path}.source_type: unsupported value '{source_type}'")
+        levels = source.get("seniority_levels")
+        if not isinstance(levels, list):
+            report.error(f"{path}.seniority_levels: must be an array")
+        else:
+            for level in levels:
+                if level not in SENIORITY_LEVELS:
+                    report.error(
+                        f"{path}.seniority_levels: unsupported value '{level}'"
+                    )
     for index, role in enumerate(document.get("roles") or []):
         if not isinstance(role, dict):
             continue
+        path = f"estimation-policy.roles[{index}]"
         _require(
             role,
-            ["id", "title", "monthly_rate", "source_id"],
-            f"estimation-policy.roles[{index}]",
+            [
+                "id",
+                "title",
+                "occupation",
+                "seniority",
+                "seniority_confirmed",
+                "monthly_rate",
+                "rate_method",
+                "source_ids",
+                "rate_evidence",
+                "rate_rationale",
+            ],
+            path,
             report,
         )
-        source_id = role.get("source_id")
-        if source_id not in source_ids:
-            report.error(
-                f"estimation-policy.roles[{index}]: unknown rate source '{source_id}'"
-            )
+        seniority = role.get("seniority")
+        if seniority not in SENIORITY_LEVELS:
+            report.error(f"{path}.seniority: unsupported value '{seniority}'")
+        for field_name in ("title", "occupation", "rate_rationale"):
+            value = role.get(field_name)
+            if not isinstance(value, str) or not value.strip():
+                report.error(f"{path}.{field_name}: must be a non-empty string")
+        seniority_confirmed = role.get("seniority_confirmed")
+        if not isinstance(seniority_confirmed, bool):
+            report.error(f"{path}.seniority_confirmed: must be boolean")
+            if final:
+                report.error(
+                    f"{path}: final policy requires user-confirmed seniority"
+                )
+        elif final and not seniority_confirmed:
+            report.error(f"{path}: final policy requires user-confirmed seniority")
+        rate_method = role.get("rate_method")
+        if rate_method not in RATE_METHODS:
+            report.error(f"{path}.rate_method: unsupported value '{rate_method}'")
+        role_source_ids = role.get("source_ids")
+        referenced_sources: list[dict[str, Any]] = []
+        role_source_id_set: set[str] = set()
+        if not isinstance(role_source_ids, list):
+            report.error(f"{path}.source_ids: must be an array")
+        else:
+            if final and not role_source_ids:
+                report.error(f"{path}.source_ids: final role requires a rate source")
+            for source_id in role_source_ids:
+                if not isinstance(source_id, str) or not source_id:
+                    report.error(
+                        f"{path}.source_ids: references must be non-empty strings"
+                    )
+                    continue
+                if source_id in role_source_id_set:
+                    report.error(f"{path}.source_ids: duplicate source reference")
+                    continue
+                role_source_id_set.add(source_id)
+                source = source_by_id.get(source_id)
+                if source is None:
+                    report.error(f"{path}: unknown rate source '{source_id}'")
+                else:
+                    referenced_sources.append(source)
+        rate_evidence = role.get("rate_evidence")
+        evidence_source_ids: set[str] = set()
+        if not isinstance(rate_evidence, list):
+            report.error(f"{path}.rate_evidence: must be an array")
+        else:
+            for evidence_index, evidence in enumerate(rate_evidence):
+                evidence_path = f"{path}.rate_evidence[{evidence_index}]"
+                if not isinstance(evidence, dict):
+                    report.error(f"{evidence_path}: must be an object")
+                    continue
+                _require(
+                    evidence,
+                    [
+                        "source_id",
+                        "observed_value",
+                        "observed_unit",
+                        "normalized_monthly_rate",
+                        "normalization_note",
+                    ],
+                    evidence_path,
+                    report,
+                )
+                evidence_source_id = evidence.get("source_id")
+                if evidence_source_id in evidence_source_ids:
+                    report.error(
+                        f"{evidence_path}.source_id: duplicate evidence source"
+                    )
+                if isinstance(evidence_source_id, str):
+                    evidence_source_ids.add(evidence_source_id)
+                if evidence_source_id not in role_source_id_set:
+                    report.error(
+                        f"{evidence_path}.source_id: must appear in role source_ids"
+                    )
+                if evidence.get("observed_unit") not in {
+                    "monthly",
+                    "annual",
+                    "daily",
+                    "hourly",
+                }:
+                    report.error(
+                        f"{evidence_path}.observed_unit: unsupported value "
+                        f"'{evidence.get('observed_unit')}'"
+                    )
+                note = evidence.get("normalization_note")
+                if not isinstance(note, str) or not note.strip():
+                    report.error(
+                        f"{evidence_path}.normalization_note: must be "
+                        "a non-empty string"
+                    )
+                for amount_field in ("observed_value", "normalized_monthly_rate"):
+                    try:
+                        if decimal(evidence.get(amount_field)) < 0:
+                            report.error(
+                                f"{evidence_path}.{amount_field}: cannot be negative"
+                            )
+                    except Exception:
+                        report.error(
+                            f"{evidence_path}.{amount_field}: must be numeric"
+                        )
+            if final and evidence_source_ids != role_source_id_set:
+                report.error(
+                    f"{path}.rate_evidence: final role requires one normalized "
+                    "observation for every cited source"
+                )
+        if rate_method == "kosa-seniority":
+            kosa_matches = [
+                source
+                for source in referenced_sources
+                if source.get("source_type") == "kosa"
+                and seniority in (source.get("seniority_levels") or [])
+            ]
+            if not kosa_matches:
+                report.error(
+                    f"{path}: kosa-seniority requires a KOSA source that "
+                    f"explicitly covers seniority '{seniority}'"
+                )
+        elif rate_method == "web-estimate":
+            web_matches = [
+                source
+                for source in referenced_sources
+                if source.get("source_type") in WEB_RATE_SOURCE_TYPES
+                and seniority in (source.get("seniority_levels") or [])
+            ]
+            if not web_matches:
+                report.error(
+                    f"{path}: web-estimate requires a dated web source that "
+                    f"covers seniority '{seniority}'"
+                )
+            elif not any(
+                source.get("source_type") == "government-statistics"
+                for source in web_matches
+            ):
+                publishers = {
+                    source.get("publisher")
+                    for source in web_matches
+                    if source.get("publisher")
+                }
+                if len(publishers) < 2:
+                    report.error(
+                        f"{path}: web-estimate without government statistics "
+                        "requires two independent publishers"
+                    )
+        elif rate_method == "customer-provided":
+            if not any(
+                source.get("source_type") == "customer-policy"
+                and seniority in (source.get("seniority_levels") or [])
+                for source in referenced_sources
+            ):
+                report.error(
+                    f"{path}: customer-provided requires a customer-policy "
+                    f"source that covers seniority '{seniority}'"
+                )
         try:
             if decimal(role.get("monthly_rate")) < 0:
-                report.error(
-                    f"estimation-policy.roles[{index}].monthly_rate: cannot be negative"
-                )
+                report.error(f"{path}.monthly_rate: cannot be negative")
         except Exception:
-            report.error(
-                f"estimation-policy.roles[{index}].monthly_rate: must be numeric"
-            )
+            report.error(f"{path}.monthly_rate: must be numeric")
     rules = document.get("cost_rules")
     if not isinstance(rules, dict):
         report.error("estimation-policy.cost_rules: must be an object")
@@ -874,6 +1077,10 @@ def calculate_scenarios(
                     "classification": item["classification"],
                     "role_id": role["id"],
                     "role_title": role["title"],
+                    "role_occupation": role["occupation"],
+                    "role_seniority": role["seniority"],
+                    "rate_method": role["rate_method"],
+                    "rate_source_ids": role["source_ids"],
                     "effort_mm": money_number(effort),
                     "monthly_rate": money_number(rate),
                     "direct_labor": money_number(round_money(effort * rate, unit, mode)),

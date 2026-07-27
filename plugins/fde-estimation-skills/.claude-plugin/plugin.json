@@ -1,7 +1,7 @@
 {
   "name": "fde-estimation-skills",
   "version": "0.2.0",
-  "description": "Interactive, evidence-backed FDE discovery, scope reconciliation, and software estimate document workflows",
+  "description": "Interactive, evidence-backed FDE discovery, staffing, scope reconciliation, and software estimate document workflows",
   "author": {
     "name": "dabsdamoon"
   }

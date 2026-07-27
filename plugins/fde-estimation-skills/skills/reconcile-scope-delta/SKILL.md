@@ -31,14 +31,16 @@ derive it automatically from code volume or the existence of a feature.
    - `future-option`;
    - `unresolved`.
 9. Explain the rationale and customer-confirmation state.
-10. Add scenario allocations by role and M/M. Keep replacement, remaining, and
-   change-adjustment allocations independent.
+10. Add scenario allocations by reviewed role-level ID and M/M. Do not collapse
+    entry, junior, and senior contributors into one average-rate role. Keep
+    replacement, remaining, and change-adjustment allocations independent.
 11. Set unpriced or excluded allocations to `include_in_estimate: false`.
 12. Keep a proposed change separate from an approved change.
 13. Create draft `scope-traceability.json` with `review.status: pending`.
-14. Run GATE-4. Present the classifications, role/M/M allocations, exclusions,
-    assumptions, and unresolved price effects. Wait for the user or identified
-    estimate owner to review them; apply corrections and record the real review.
+14. Run GATE-4. Present the classifications, role, seniority, M/M allocations,
+    exclusions, assumptions, and unresolved price effects. Wait for the user or
+    identified estimate owner to review them; apply corrections and record the
+    real review.
 15. After approval, render and verify:
 
 ```bash

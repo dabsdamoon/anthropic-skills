@@ -52,13 +52,22 @@ Ask the user to choose or provide every commercial input that is not fixed by a
 cited source:
 
 - jurisdiction, currency, rate basis, and effective period;
+- necessary job families and `entry`, `junior`, or `senior` level for each;
 - estimation method and effort unit;
 - overhead, technical fee, profit, risk, discount, and tax;
 - rounding, confidence range, estimate validity, and re-estimation triggers.
 
-Zero is a valid explicit choice. Silence is not. Present the complete policy and
-its arithmetic order, then wait for review. Record approval in
-`estimation-policy.review`.
+First present a proposed staffing matrix derived from reviewed scope. Ask the
+user to confirm, change, add, or remove every role-level combination. Do not
+infer seniority from the repository or assign one occupation-wide KOSA average
+to every level.
+
+After staffing review, apply
+`workforce-rate-source-rules.md`: use a current KOSA value only when it
+explicitly covers the selected seniority; otherwise research level-specific web
+evidence and show the normalization. Zero is a valid explicit choice. Silence is
+not. Present the complete policy and its arithmetic order, then wait for review.
+Record approval in `estimation-policy.review`.
 
 ## GATE-4: Review scope classification and effort
 
@@ -68,6 +77,7 @@ material item show:
 - plain-language capability or work product;
 - scope classification and rationale;
 - scenario, role, M/M, and included or excluded state;
+- confirmed role seniority and its reviewed monthly rate;
 - customer-confirmation and approval reference;
 - assumptions or unresolved questions that could change price.
 

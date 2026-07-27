@@ -35,6 +35,9 @@ The deterministic calculator supports `HALF_UP`, `DOWN`, and `UP`.
 ## Evidence gates
 
 - A role must exist in the estimation policy before it can be priced.
+- Every priced role must have user-confirmed seniority and auditable normalized
+  rate evidence for its cited sources.
+- An aggregate KOSA occupation average or percentile is not a seniority rate.
 - Every priced allocation must point to a scope item.
 - A confirmed change-adjustment must include an approval reference.
 - A proposed change-adjustment must be described as a request for discussion,

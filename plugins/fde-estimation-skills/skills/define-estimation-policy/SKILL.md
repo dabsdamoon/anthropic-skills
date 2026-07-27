@@ -1,6 +1,6 @@
 ---
 name: define-estimation-policy
-description: Define a reproducible software estimation policy with dated role rates, source references, effort units, overhead, technical fee, profit, risk, discount, tax, rounding, confidence range, and validity. Use when a user needs the pricing and arithmetic rules that support an FDE budgetary estimate, basis of estimate, replacement valuation, remaining-work quote, or change-adjustment proposal.
+description: Interactively define a reproducible software estimation policy with user-reviewed job families and entry, junior, or senior staffing; KOSA or level-specific web rate evidence; effort units; overhead; technical fee; profit; risk; discount; tax; rounding; confidence; and validity. Use when a user needs the staffing, pricing, and arithmetic rules for an FDE budgetary estimate, basis of estimate, replacement valuation, remaining-work quote, or change-adjustment proposal.
 ---
 
 # Define Estimation Policy
@@ -14,16 +14,21 @@ Never hardcode a current market rate without its source and date.
 2. Confirm GATE-0 is complete. If the value question or product boundary is
    unclear, ask the user and wait before choosing a policy.
 3. Read `../../references/scenario-and-calculation-rules.md` completely.
-4. Read `references/policy-contract.md` completely.
-5. Run GATE-3. Ask the user for jurisdiction, currency, locale, effective
-   period, estimate maturity, commercial model, and every user-owned cost rule.
-   Do not infer a default from the repository or silently choose a benchmark.
-6. Collect official or primary role-rate sources. When current rates matter,
-   verify them from the source at execution time and record retrieval date.
-7. Add market benchmarks only as cross-checks; do not present a market listing
-   as a binding rate.
-8. Define role IDs and monthly rates. Keep role mapping explicit.
-9. Set every cost component explicitly, including zero values:
+4. Read `../../references/workforce-rate-source-rules.md` completely.
+5. Read `references/policy-contract.md` completely.
+6. Run GATE-3. Derive and present the necessary job families with the reason
+   each is needed. Ask the user to confirm `entry`, `junior`, or `senior` for
+   every role-level combination and wait.
+7. After staffing confirmation, ask for jurisdiction, currency, locale,
+   effective period, estimate maturity, commercial model, and every user-owned
+   cost rule. Do not infer a default from the repository.
+8. Check the latest applicable KOSA publication. Use it as the selected rate
+   only when it explicitly covers the confirmed seniority. Otherwise collect
+   current level-specific web evidence according to the workforce source rules.
+9. Record every observed value, normalization, compensation scope, selected
+   monthly rate, and rationale. Keep an aggregate KOSA value as a cross-check,
+   never as a silent proxy for seniority.
+10. Set every cost component explicitly, including zero values:
    - overhead;
    - technical fee;
    - profit;
@@ -31,13 +36,13 @@ Never hardcode a current market rate without its source and date.
    - discount;
    - tax;
    - rounding.
-10. Define confidence range, re-estimation triggers, and validity period.
-11. Create draft `estimation-policy.yaml` using JSON-compatible YAML and
+11. Define confidence range, re-estimation triggers, and validity period.
+12. Create draft `estimation-policy.yaml` using JSON-compatible YAML and
     `estimation-policy.md` with `review.status: pending`.
-12. Present the full policy, rate sources, and arithmetic order. Wait for the
-    user or identified estimate owner to approve or correct it and record the
-    real review reference.
-13. Validate only after the review is approved:
+13. Present the staffing matrix, raw and normalized rate evidence, selected
+    rates, cost rules, and arithmetic order. Wait for the user or identified
+    estimate owner to approve or correct them and record the real review.
+14. Validate only after the review is approved:
 
 ```bash
 python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
@@ -49,6 +54,8 @@ python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
 ## Judgment rules
 
 - Distinguish employee average wages, supplier cost, and customer billing rate.
+- Do not treat a KOSA occupation mean or wage percentile as a seniority band
+  unless the publication explicitly defines it that way.
 - Explain whether statutory benefits, tools, travel, infrastructure, and
   support are included.
 - Use company policy, not the implemented product, to choose margin.
@@ -61,4 +68,5 @@ python3 "$PLUGIN_DIR/scripts/validate_input_package.py" \
 
 Stop finalization when a priced role lacks a dated source or when the arithmetic
 order is ambiguous. If a user-owned value is unanswered, keep the policy in
-draft; zero is valid only when explicitly selected.
+draft; zero is valid only when explicitly selected. Also stop when any role
+lacks user-confirmed seniority or auditable normalized rate evidence.

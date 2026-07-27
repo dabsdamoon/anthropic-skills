@@ -91,5 +91,7 @@ deliver the verified Markdown package and state the limitation.
 - Never add independent scenarios into one amount due.
 - Describe a proposed change-adjustment as a negotiation request.
 - Keep unverified assumptions and re-estimation triggers visible.
+- Show reviewed job families, seniority, raw and normalized rate observations,
+  compensation scope, and rate-selection rationale in the basis of estimate.
 - Do not use `draft` status as permission to invent missing commercial inputs.
 - Require calculation and package verification to pass before delivery.

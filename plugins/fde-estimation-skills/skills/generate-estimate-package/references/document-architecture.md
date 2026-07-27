@@ -32,7 +32,9 @@ Basis of estimate:
 - evidence boundary;
 - traceability and classifications;
 - WBS and role effort;
-- rate sources and cost rules;
+- reviewed job families and seniority;
+- raw and normalized rate sources, compensation scope, and selection rationale;
+- cost rules;
 - arithmetic reconciliation;
 - risks, assumptions, and limitations.
 
