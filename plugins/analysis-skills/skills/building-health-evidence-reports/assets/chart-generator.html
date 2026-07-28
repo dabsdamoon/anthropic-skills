@@ -1,0 +1,164 @@
+<!doctype html>
+<meta charset="utf-8">
+<!--
+  그래프 생성 템플릿 — matplotlib 없이 SVG로 그리고 브라우저로 PNG를 뽑는다.
+  환경 의존성이 없고 한글 폰트 문제도 없다.
+
+  사용법
+  1. 아래 DATA 블록만 교체한다
+  2. python3 -m http.server 8777 --directory <이 파일이 있는 폴더>
+  3. 브라우저(또는 playwright)로 열어 각 .chart 요소를 PNG로 저장한다
+
+  색: dataviz 스킬의 검증된 팔레트.
+      2계열은 blue #2a78d6 + orange #eb6834 (색맹 검증 통과)
+      강조는 같은 색상의 진하기 차이(#2a78d6 vs #9ec5f4)로 준다 — 순위가 아니라 대상이 바뀔 때만
+  규칙: 막대에 수치 직접 라벨(흑백 인쇄 대비), 라인은 시작·끝점만 라벨, 격자는 연하게
+-->
+<style>
+  body { margin:0; padding:24px; background:#f9f9f7;
+         font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif; }
+  .chart { background:#fcfcfb; padding:20px 24px 16px; margin-bottom:24px;
+           width:880px; box-sizing:border-box; }
+  .title { font-size:16px; font-weight:600; color:#0b0b0b; margin:0 0 2px; }
+  .sub { font-size:12.5px; color:#52514e; margin:0 0 14px; }
+  .legend { display:flex; gap:16px; margin:0 0 10px; font-size:12.5px; color:#52514e; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .sw { width:10px; height:10px; border-radius:2px; display:inline-block; }
+  .note { font-size:11.5px; color:#898781; margin:10px 0 0; line-height:1.5; }
+</style>
+
+<!-- ═══════════════ DATA — 여기만 교체 ═══════════════ -->
+<script>
+const DATA = {
+  line: {
+    title: '지표 추이', sub: '2014~2024년 · 단위 %',
+    note: '출처: <기관>',
+    x: [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],
+    y: [38.7,39.6,42.2,45.0,47.3,50.6,53.6,56.7,61.2,63.8,66.9],
+    yMax: 80,
+    band: {from:10, to:15, label:'권고 구간 10~15%'}   // 없으면 null
+  },
+  grouped: {
+    title: '범주별 비교', sub: '2014년 대비 2024년 · 단위 %',
+    note: '모든 범주에서 상승했다.',
+    seriesA: '2014년', seriesB: '2024년',
+    cats: ['19세 이하','20-29세','30-39세','40-49세'],
+    a: [23.5,32.7,40.3,61.1],
+    b: [44.9,62.2,67.1,78.0],
+    yMax: 80
+  },
+  ranking: {
+    title: '국가별 순위', sub: '34개국 · 단위 %',
+    note: '출처: <기관>',
+    highlight: '한국',
+    avg: {value:28.8, label:'평균 28.8'},   // 없으면 null
+    xMax: 60,
+    rows: [['튀르키예',57.3],['한국',53.8],['멕시코',52.6],['네덜란드',15.6]]
+  }
+};
+</script>
+<!-- ═══════════════ 이 아래는 건드리지 않는다 ═══════════════ -->
+
+<div class="chart" id="c-line"></div>
+<div class="chart" id="c-grouped"></div>
+<div class="chart" id="c-ranking"></div>
+
+<script>
+const C = {ink:'#0b0b0b', ink2:'#52514e', muted:'#898781', grid:'#e1e0d9',
+           base:'#c3c2b7', s1:'#2a78d6', s2:'#eb6834', dim:'#9ec5f4', surf:'#fcfcfb'};
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const txt=(s,a={})=>{const t=el('text',a);t.textContent=s;return t;};
+const head=(host,d,legend)=>{
+  host.appendChild(Object.assign(document.createElement('p'),{className:'title',textContent:d.title}));
+  host.appendChild(Object.assign(document.createElement('p'),{className:'sub',textContent:d.sub}));
+  if(legend) host.insertAdjacentHTML('beforeend',
+    `<div class="legend"><span><i class="sw" style="background:${C.s1}"></i>${d.seriesA}</span>`+
+    `<span><i class="sw" style="background:${C.s2}"></i>${d.seriesB}</span></div>`);
+};
+const foot=(host,d)=>host.insertAdjacentHTML('beforeend',`<p class="note">${d.note}</p>`);
+
+/* ── 시계열 라인 ── */
+(d=>{
+  const host=document.getElementById('c-line'); head(host,d,false);
+  const W=832,H=330,L=44,R=58,T=14,B=32, pw=W-L-R, ph=H-T-B;
+  const x=i=>L+pw*i/(d.x.length-1), y=v=>T+ph*(1-v/d.yMax);
+  const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`});
+  if(d.band){
+    svg.appendChild(el('rect',{x:L,y:y(d.band.to),width:pw,height:y(d.band.from)-y(d.band.to),
+      fill:C.muted,opacity:'0.10'}));
+    svg.appendChild(txt(d.band.label,{x:L+6,y:y(d.band.to)-5,'font-size':11,fill:C.muted}));
+  }
+  for(let g=0; g<=d.yMax; g+=d.yMax/4){
+    svg.appendChild(el('line',{x1:L,x2:L+pw,y1:y(g),y2:y(g),stroke:g===0?C.base:C.grid,'stroke-width':1}));
+    svg.appendChild(txt(g,{x:L-9,y:y(g)+4,'font-size':11.5,fill:C.muted,'text-anchor':'end',
+      'font-variant-numeric':'tabular-nums'}));
+  }
+  svg.appendChild(el('path',{d:d.y.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' '),
+    fill:'none',stroke:C.s1,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  d.y.forEach((v,i)=>{
+    const edge = i===0||i===d.y.length-1;
+    svg.appendChild(el('circle',{cx:x(i),cy:y(v),r:edge?5:3.2,fill:C.s1,stroke:C.surf,'stroke-width':2}));
+    svg.appendChild(txt(d.x[i],{x:x(i),y:H-10,'font-size':11.5,fill:C.muted,'text-anchor':'middle',
+      'font-variant-numeric':'tabular-nums'}));
+  });
+  svg.appendChild(txt(d.y[0],{x:x(0)+2,y:y(d.y[0])+20,'font-size':13,fill:C.ink2,
+    'text-anchor':'middle','font-weight':600}));
+  const last=d.y.length-1;
+  svg.appendChild(txt(d.y[last],{x:x(last)+8,y:y(d.y[last])+5,'font-size':17,fill:C.ink,'font-weight':700}));
+  host.appendChild(svg); foot(host,d);
+})(DATA.line);
+
+/* ── 그룹 막대 ── */
+(d=>{
+  const host=document.getElementById('c-grouped'); head(host,d,true);
+  const W=832,H=300,L=44,R=14,T=10,B=34, pw=W-L-R, ph=H-T-B;
+  const y=v=>T+ph*(1-v/d.yMax);
+  const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`});
+  for(let g=0; g<=d.yMax; g+=d.yMax/4){
+    svg.appendChild(el('line',{x1:L,x2:L+pw,y1:y(g),y2:y(g),stroke:g===0?C.base:C.grid,'stroke-width':1}));
+    svg.appendChild(txt(g,{x:L-9,y:y(g)+4,'font-size':11.5,fill:C.muted,'text-anchor':'end',
+      'font-variant-numeric':'tabular-nums'}));
+  }
+  const gw=pw/d.cats.length, bw=Math.min(52,gw*0.30), gap=2;
+  d.cats.forEach((c,i)=>{
+    const cx=L+gw*i+gw/2;
+    [[d.a[i],C.s1,-1],[d.b[i],C.s2,1]].forEach(([v,col,side])=>{
+      const bx=cx+side*(gap/2)+(side<0?-bw:0);
+      svg.appendChild(el('path',{d:`M${bx},${y(0)} L${bx},${y(v)+4} Q${bx},${y(v)} ${bx+4},${y(v)}
+        L${bx+bw-4},${y(v)} Q${bx+bw},${y(v)} ${bx+bw},${y(v)+4} L${bx+bw},${y(0)} Z`,fill:col}));
+      svg.appendChild(txt(v.toFixed(1),{x:bx+bw/2,y:y(v)-7,'font-size':12.5,fill:C.ink2,
+        'text-anchor':'middle','font-weight':600,'font-variant-numeric':'tabular-nums'}));
+    });
+    svg.appendChild(txt(c,{x:cx,y:H-12,'font-size':12.5,fill:C.ink2,'text-anchor':'middle'}));
+  });
+  host.appendChild(svg); foot(host,d);
+})(DATA.grouped);
+
+/* ── 가로 순위 막대 ── */
+(d=>{
+  const host=document.getElementById('c-ranking'); head(host,d,false);
+  const rowH=19,L=92,R=46,T=26,B=8,W=832,H=T+B+d.rows.length*rowH, pw=W-L-R;
+  const x=v=>L+pw*(v/d.xMax);
+  const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`});
+  for(let g=0; g<=d.xMax; g+=d.xMax/3){
+    svg.appendChild(el('line',{x1:x(g),x2:x(g),y1:T-6,y2:H-B,stroke:g===0?C.base:C.grid,'stroke-width':1}));
+    svg.appendChild(txt(Math.round(g),{x:x(g),y:T-12,'font-size':11.5,fill:C.muted,'text-anchor':'middle'}));
+  }
+  if(d.avg){
+    svg.appendChild(el('line',{x1:x(d.avg.value),x2:x(d.avg.value),y1:T-6,y2:H-B,stroke:C.ink2,
+      'stroke-width':1.5,'stroke-dasharray':'4 3'}));
+    svg.appendChild(txt(d.avg.label,{x:x(d.avg.value)+6,y:T-12,'font-size':11.5,fill:C.ink2,'font-weight':600}));
+  }
+  d.rows.forEach(([name,v],i)=>{
+    const y=T+i*rowH, bh=12, hi=name===d.highlight, w=x(v)-L;
+    svg.appendChild(el('path',{d:`M${L},${y} L${L+w-4},${y} Q${L+w},${y} ${L+w},${y+4}
+      L${L+w},${y+bh-4} Q${L+w},${y+bh} ${L+w-4},${y+bh} L${L},${y+bh} Z`, fill: hi?C.s1:C.dim}));
+    svg.appendChild(txt(name,{x:L-8,y:y+bh-1.5,'font-size':11.5,fill:hi?C.ink:C.ink2,
+      'text-anchor':'end','font-weight':hi?700:400}));
+    svg.appendChild(txt(v.toFixed(1),{x:x(v)+6,y:y+bh-1.5,'font-size':11.5,fill:hi?C.ink:C.muted,
+      'font-weight':hi?700:400,'font-variant-numeric':'tabular-nums'}));
+  });
+  host.appendChild(svg); foot(host,d);
+})(DATA.ranking);
+</script>
