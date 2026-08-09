@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dual-Track TDD"
+  short_description: "Discovery evidence to test-driven delivery"
+  default_prompt: "Use $dual-track-tdd to turn an uncertain product idea into a validated delivery contract and implement it test-first."
