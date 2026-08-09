@@ -137,7 +137,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 |--------|--------|-------------|
 | **document-skills** | xlsx, docx, pptx, pdf | Create, read, edit spreadsheets, Word docs, presentations, and PDFs |
 | **design-skills** | frontend-design, algorithmic-art, canvas-design, brand-guidelines, theme-factory, slack-gif-creator, web-artifacts-builder | Frontend UI, generative art, visual design, and brand styling |
-| **developer-workflow-skills** | pr-creator, pr-checklist-verifier, setup-release-pipeline, deploy-check, webapp-testing, refactoring-resistant-tests, generate-git-work-report, docker-ram-checker, mcp-builder, prompt-optimizer, subagent-creator, debugging-retrospective, gcloud-direnv-setup | PR docs, release pipelines, deploy checks, Git-based execution histories, browser testing, refactoring-resistant testing, Docker memory checks, debugging postmortems, and more |
+| **developer-workflow-skills** | dual-track-tdd, pr-creator, pr-checklist-verifier, setup-release-pipeline, deploy-check, webapp-testing, refactoring-resistant-tests, generate-git-work-report, docker-ram-checker, mcp-builder, prompt-optimizer, subagent-creator, debugging-retrospective, gcloud-direnv-setup | Evidence-driven product discovery, TDD delivery, PR docs, release pipelines, deploy checks, Git-based execution histories, browser testing, refactoring-resistant testing, Docker memory checks, debugging postmortems, and more |
 | **fde-estimation-skills** | capture-customer-outcomes, document-field-discovery, collect-as-built-evidence, define-estimation-policy, reconcile-scope-delta, generate-estimate-package | Interactive, evidence-backed FDE discovery, reviewed staffing, seniority, rate, scope, and effort reconciliation, budgetary estimates, and basis-of-estimate reports |
 | **writing-skills** | doc-coauthoring, internal-comms, skill-creator, system-prompt-creator, humanize-korean | Documentation workflows, internal comms, skill/prompt authoring, Korean AI-text humanizing |
 | **resume-skills** | resume-formatter, resume-translator, resume-project-summary | Resume formatting, EN/JP/KR/CN translation, portfolio summaries from codebases |
@@ -167,6 +167,7 @@ These skills are original to this marketplace — not available in Anthropic's o
 
 | Skill | What It Does |
 |-------|-------------|
+| **dual-track-tdd** | Runs product discovery and test-driven delivery as linked tracks, with explicit evidence, handoff, acceptance, and feedback gates |
 | **pr-creator** | Generates PR documentation with blast radius analysis (how many files depend on your changes) and OWASP security scanning of the diff |
 | **setup-release-pipeline** | Sets up an opinionated production-pointer release workflow for branch-tracking hosts: `main` stays latest-code/release-candidate, `production` is the live branch, and `run_deploy.sh` ships explicitly without deploy secrets |
 | **deploy-check** | Checks deployment readiness and records a concise deploy report |
