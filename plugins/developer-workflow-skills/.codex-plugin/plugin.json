@@ -1,20 +1,21 @@
 {
   "name": "developer-workflow-skills",
-  "description": "Developer workflow toolkit: dual-track product discovery with TDD delivery, PR creation, PR checklist verification, release pipeline setup, deploy checks, webapp testing, refactoring-resistant test writing, Git-based work reports, Docker RAM checking, debugging retrospectives, MCP server building, prompt optimization, subagent creation, and GCloud setup",
-  "version": "1.4.5",
+  "description": "Developer workflow toolkit: dual-track product discovery with TDD delivery, evidence-aware PR creation, PR checklist verification, release pipeline setup, deploy checks, webapp testing, refactoring-resistant test writing, Git-based work reports, Docker RAM checking, debugging retrospectives, MCP server building, prompt optimization, subagent creation, and GCloud setup",
+  "version": "1.4.6",
   "author": {
     "name": "dabsdamoon"
   },
   "interface": {
     "displayName": "Developer Workflow Skills",
     "shortDescription": "Reusable workflows for development, testing, and release operations",
-    "longDescription": "A practical collection of skills for dual-track product discovery and TDD delivery, pull requests, deployment checks, browser testing, refactoring-resistant tests, evidence-backed Git work reports, Docker analysis, debugging, and cloud setup.",
+    "longDescription": "A practical collection of skills for dual-track product discovery and TDD delivery, evidence-aware pull requests, deployment checks, browser testing, refactoring-resistant tests, evidence-backed Git work reports, Docker analysis, debugging, and cloud setup.",
     "developerName": "dabsdamoon",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Execute"],
     "defaultPrompt": [
       "Review this change before deployment.",
       "Turn this uncertain product idea into a discovery experiment and test-driven delivery plan.",
+      "Create an evidence-aware Discovery or Delivery pull request.",
       "Write refactoring-resistant tests for this behavior.",
       "Prepare a pull request for the current branch.",
       "Create an external project history and internal work log from this Git repository."

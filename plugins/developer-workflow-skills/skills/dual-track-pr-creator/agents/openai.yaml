@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dual-Track PR Creator"
+  short_description: "Write evidence-aware Discovery and Delivery PRs"
+  default_prompt: "Use $dual-track-pr-creator to classify this change and create an evidence-aware PR to main."
