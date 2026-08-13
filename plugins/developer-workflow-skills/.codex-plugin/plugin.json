@@ -1,7 +1,7 @@
 {
   "name": "developer-workflow-skills",
-  "description": "Developer workflow toolkit: dual-track product discovery with TDD delivery, evidence-aware PR creation, PR checklist verification, release pipeline setup, deploy checks, webapp testing, refactoring-resistant test writing, Git-based work reports, Docker RAM checking, debugging retrospectives, MCP server building, prompt optimization, subagent creation, and GCloud setup",
-  "version": "1.4.6",
+  "description": "Developer workflow toolkit: dual-track product discovery with TDD delivery, evidence-aware PR creation, dual-track PR checklist verification, release pipeline setup, deploy checks, webapp testing, refactoring-resistant test writing, Git-based work reports, Docker RAM checking, debugging retrospectives, MCP server building, prompt optimization, subagent creation, and GCloud setup",
+  "version": "1.4.7",
   "author": {
     "name": "dabsdamoon"
   },
@@ -16,6 +16,7 @@
       "Review this change before deployment.",
       "Turn this uncertain product idea into a discovery experiment and test-driven delivery plan.",
       "Create an evidence-aware Discovery or Delivery pull request.",
+      "Verify this PR's checklist and update the description with what you proved.",
       "Write refactoring-resistant tests for this behavior.",
       "Prepare a pull request for the current branch.",
       "Create an external project history and internal work log from this Git repository."
