@@ -1,7 +1,7 @@
 {
   "name": "houmy-skills",
-  "description": "Houmy maternity care service: brand, UI, document design, and codebase refactoring",
-  "version": "1.1.0",
+  "description": "Houmy maternity care service: brand, UI, document design, clinical cohort metrics, and codebase refactoring",
+  "version": "1.2.0",
   "author": {
     "name": "dabsdamoon"
   }
