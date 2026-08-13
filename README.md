@@ -235,7 +235,7 @@ These skills are original to this marketplace — not available in Anthropic's o
 
 | Skill | What It Does |
 |-------|-------------|
-| **houmlike-design** | Branded UI design for Houmy, a maternity care service — applies Houm's design philosophy to web interfaces |
+| **houmlike-design** | Houm brand, UI, and operational-document design with Korean/bilingual typography guidance |
 | **houm-refactoring** | Systematic refactoring for Houmy's Python/FastAPI + React/Vite codebase — replaces implicit/magic patterns with explicit, grep-able code |
 | **update-houmy-notes** | Writes update notes specific to the Houmy repository |
 
