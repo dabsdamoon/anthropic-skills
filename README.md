@@ -143,7 +143,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **resume-skills** | resume-formatter, resume-translator, resume-project-summary | Resume formatting, EN/JP/KR/CN translation, portfolio summaries from codebases |
 | **config-skills** | claude-config-migrator, update-notes, update-houmy-notes | Migrate Claude Code config between repos, write update notes |
 | **llm-wiki-skills** | make-llm-wiki-raw, wikify-raw | Capture raw LLM-Wiki sources and turn them into linked Obsidian wiki pages |
-| **houmy-skills** | houmlike-design, houm-refactoring | Houmy maternity care service: branded UI design and systematic codebase refactoring |
+| **houmy-skills** | houmlike-design, houm-refactoring | Houmy maternity care service: brand, UI, operational-document design, and systematic codebase refactoring |
 | **claude-api** | claude-api | Claude API & SDK reference across Python, TypeScript, Go, Java, PHP, Ruby, C#, curl |
 | **translation-skills** | translate-book | Translate entire books (PDF/DOCX/EPUB) into any language using parallel sub-agents |
 

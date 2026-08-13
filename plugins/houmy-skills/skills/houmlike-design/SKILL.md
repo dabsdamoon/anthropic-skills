@@ -10,6 +10,18 @@ To create designs and interfaces for Houm, use this skill. Houm is a maternity c
 
 ---
 
+## Source Precedence
+
+Apply typography and visual rules in this order:
+
+1. Follow an explicit design handoff or design system in the target repository. Treat it as the product source of truth.
+2. When editing an existing artifact, preserve its established typefaces and metrics unless the user asks for a redesign.
+3. Use the canonical 2019 brand-book rules below when no artifact-specific rule exists.
+
+Do not replace a repository's product typography merely to make it look more “Houm-like.” Brand guidance supplies defaults; it does not override a documented product decision.
+
+For Korean or bilingual PDF, InDesign, form, checklist, agreement, or other operational-document work, read [`references/document-typography.md`](references/document-typography.md) before choosing or changing fonts. It distinguishes canonical brand fonts from typefaces observed in shipped Houm documents.
+
 ## Canonical Design System
 
 **This section defines THE standard, derived directly from the original 2019 Houm brand book. Use these values for consistency across all Houm properties.**
@@ -466,6 +478,7 @@ Every Houm design should:
   - `brand-mark-construction.png` — reference render of the construction grid + ® placement
   - `brand-palette.png` — reference render of the official mark on Houm Green / Houm Beige / Houm Baby Green / Houm Baby Blue
 - **Canvas Fonts**: `canvas-fonts/` directory contains 7 curated font families (Lora, InstrumentSans, InstrumentSerif, WorkSans, Outfit, CrimsonPro, LibreBaskerville) for static design artifacts. The canonical brand serif (Sanchez) and Korean serif (Nanum Myeongjo) are not yet bundled — load via Google Fonts for web work, or substitute with CrimsonPro / Roboto Slab for static design.
+- **Operational Document Typography**: `references/document-typography.md` records the Korean/bilingual font selection and PDF preflight rules derived from Houm's maintained document artifacts.
 - **Scripts**: `scripts/init-artifact.sh`, `scripts/bundle-artifact.sh` for React artifact workflow
 - **Houm Website**: https://houmclinic.com/main/ for brand reference
 - **shadcn/ui Docs**: https://ui.shadcn.com/docs/components for component reference
