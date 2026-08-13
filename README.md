@@ -143,7 +143,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **resume-skills** | resume-formatter, resume-translator, resume-project-summary | Resume formatting, EN/JP/KR/CN translation, portfolio summaries from codebases |
 | **config-skills** | claude-config-migrator, update-notes, update-houmy-notes | Migrate Claude Code config between repos, write update notes |
 | **llm-wiki-skills** | make-llm-wiki-raw, wikify-raw | Capture raw LLM-Wiki sources and turn them into linked Obsidian wiki pages |
-| **houmy-skills** | houmlike-design, houm-refactoring | Houmy maternity care service: branded UI design and systematic codebase refactoring |
+| **houmy-skills** | houmlike-design, houm-refactoring | Houmy maternity care service: brand, UI, operational-document design, and systematic codebase refactoring |
 | **claude-api** | claude-api | Claude API & SDK reference across Python, TypeScript, Go, Java, PHP, Ruby, C#, curl |
 | **translation-skills** | translate-book | Translate entire books (PDF/DOCX/EPUB) into any language using parallel sub-agents |
 
@@ -235,7 +235,7 @@ These skills are original to this marketplace — not available in Anthropic's o
 
 | Skill | What It Does |
 |-------|-------------|
-| **houmlike-design** | Branded UI design for Houmy, a maternity care service — applies Houm's design philosophy to web interfaces |
+| **houmlike-design** | Houm brand, UI, and operational-document design with Korean/bilingual typography guidance |
 | **houm-refactoring** | Systematic refactoring for Houmy's Python/FastAPI + React/Vite codebase — replaces implicit/magic patterns with explicit, grep-able code |
 | **update-houmy-notes** | Writes update notes specific to the Houmy repository |
 
