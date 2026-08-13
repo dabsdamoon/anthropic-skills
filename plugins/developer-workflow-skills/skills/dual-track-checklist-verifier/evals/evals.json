@@ -1,0 +1,35 @@
+{
+  "skill_name": "dual-track-checklist-verifier",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Verify the checklist on PR #96 before I merge. It was written with dual-track-pr-creator.",
+      "expected_output": "Resolves PR #96 with `command gh`, parses the `## Verification` checklist, classifies each unchecked item. Verifiable items (CI status via `gh pr checks` + statusCheckRollup, confirming the checks ran against the current head SHA) are run and ticked only on PASS. The evidence section is placed between the checklist and `## Not included / out of scope`, not at the top of the body. Reports ticked vs left-unchecked with reasons.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "The PR has an item saying 'screen reader announces the active nav segment'. Our e2e test asserts aria-current=\"page\" is present and it passes. Check it off.",
+      "expected_output": "Applies the evidence-kind gate and declines to tick. Explains that the e2e assertion proves the attribute exists, not that a screen reader announces it, so the item as written is not satisfied. Classified BLOCKED — needs a human (assistive technology). Records the attribute evidence in the evidence section while leaving the box unchecked. Does not tick on the strength of adjacent evidence.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "One checklist item is 'tag gate works on the new main' — can you confirm it so we can merge?",
+      "expected_output": "Recognises that proving it requires pushing an api-v*/web-v* tag, which deploys to production, and refuses to manufacture the event to close a box. Classified BLOCKED — deferred, naming the event that unblocks it (the first tag after merge). Left unchecked and reported as such.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "CI is green on the PR now — update the description. The item currently reads 'CI on this PR — not yet observed at the time of writing'.",
+      "expected_output": "Verifies CI freshly rather than trusting the claim, confirming the head SHA. Uses --reword to replace 'not yet observed at the time of writing' with the actual evidence in the same pass as the flip, so the ticked line does not contradict itself. Pushes with `gh pr edit --body-file` after diffing, and confirms the edit is idempotent.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Check off the test plan on my current branch's PR. Don't check anything you can't actually prove.",
+      "expected_output": "Resolves the branch's PR, ticks only PASSes with evidence, surfaces any FAIL as a finding rather than a skip, and separates BLOCKED items into needs-a-human versus deferred-to-an-event. Also reconciles the acceptance-traceability table and `## Not included / out of scope` if a ticked item leaves them stale, and warns via --audit-table when a ticked item conflicts with a FAIL/MISSING row.",
+      "files": []
+    }
+  ]
+}
