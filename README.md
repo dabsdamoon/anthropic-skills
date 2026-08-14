@@ -1,6 +1,6 @@
 # my-little-skills
 
-A curated Codex and Claude Code plugin marketplace that bundles [Anthropic's official skills](https://github.com/anthropics/skills) with custom-built skills for developer workflows, document processing, design, and project-specific automation.
+A curated Agent Skills and plugin marketplace for Codex/OpenAI, Claude Code, Claude, and Cowork. It bundles [Anthropic's official skills](https://github.com/anthropics/skills) with custom-built skills for developer workflows, document processing, design, workspace operations, and project-specific automation.
 
 ## Quick Start
 
@@ -20,6 +20,12 @@ Then go to the **Discover** tab, or install directly:
 /plugin install <plugin-name>@my-little-skills
 ```
 
+For the Notion dashboard skill:
+
+```text
+/plugin install notion-workspace-skills@my-little-skills
+```
+
 ### Codex
 
 Connect the GitHub marketplace and install a plugin once for the current user:
@@ -29,7 +35,24 @@ codex plugin marketplace add dabsdamoon/my-little-skills --ref main
 codex plugin add developer-workflow-skills@my-little-skills
 ```
 
+Install the Notion dashboard plugin with:
+
+```bash
+codex plugin add notion-workspace-skills@my-little-skills
+```
+
 The installed plugin is available in every repository opened by that user. Codex stores plugin configuration and cache data under `CODEX_HOME`, which defaults to `~/.codex`; installation is not shared automatically with other operating-system accounts.
+
+### Claude and Cowork
+
+The canonical standalone Agent Skill lives at `skills/notion-dashboard-builder`. Package it for upload/import with:
+
+```bash
+cd skills/skill-creator
+uv run --with pyyaml python -m scripts.package_skill ../notion-dashboard-builder ../..
+```
+
+Upload the resulting `notion-dashboard-builder.skill` and connect an authorized Notion integration separately. The skill contains workflow instructions, not Notion credentials.
 
 #### `pr-creator` installation
 
@@ -144,6 +167,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **config-skills** | claude-config-migrator, update-notes, update-houmy-notes | Migrate Claude Code config between repos, write update notes |
 | **llm-wiki-skills** | make-llm-wiki-raw, wikify-raw | Capture raw LLM-Wiki sources and turn them into linked Obsidian wiki pages |
 | **houmy-skills** | houmlike-design, houm-cohort, houm-refactoring | Houmy maternity care service: brand, UI, operational-document design, clinical cohort metrics, and systematic codebase refactoring |
+| **notion-workspace-skills** | notion-dashboard-builder | Create root-owned Notion databases and organize safe migrations, timelines, boards, approvals, and role-aware views |
 | **claude-api** | claude-api | Claude API & SDK reference across Python, TypeScript, Go, Java, PHP, Ruby, C#, curl |
 | **translation-skills** | translate-book | Translate entire books (PDF/DOCX/EPUB) into any language using parallel sub-agents |
 
@@ -231,6 +255,12 @@ These skills are original to this marketplace — not available in Anthropic's o
 | **make-llm-wiki-raw** | Creates raw source notes in `/Users/dabsdamoon/LLM-Wiki/LLM-Wiki/raw/inbox` from URLs, files, pasted text, or project artifacts |
 | **wikify-raw** | Ingests raw LLM-Wiki sources into `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, `wiki/index.md`, and `wiki/log.md` |
 
+### Notion Workspace
+
+| Skill | What It Does |
+|-------|-------------|
+| **notion-dashboard-builder** | Creates real databases directly under a requested Notion root page, migrates records safely, adds timeline/board/approval views, and verifies ownership, counts, relations, and filtered visibility |
+
 ### Houmy (Project-Specific)
 
 | Skill | What It Does |
@@ -255,6 +285,7 @@ plugins/
   config-skills/
   llm-wiki-skills/
   houmy-skills/
+  notion-workspace-skills/
 skills/                     # Source skills (copied into plugins)
 spec/                       # Agent Skills specification
 template/                   # Skill template for creating new skills

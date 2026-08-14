@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notion Dashboard Builder"
+  short_description: "Build real Notion databases and focused operational views"
+  default_prompt: "Use $notion-dashboard-builder to create real Notion databases under my root page and organize timeline, board, and approval views."

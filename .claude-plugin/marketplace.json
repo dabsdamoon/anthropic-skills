@@ -54,6 +54,11 @@
       "source": "./plugins/houmy-skills"
     },
     {
+      "name": "notion-workspace-skills",
+      "description": "Notion workspace dashboards with root-owned databases, safe migrations, timelines, boards, approvals, and role-aware views",
+      "source": "./plugins/notion-workspace-skills"
+    },
+    {
       "name": "claude-api",
       "description": "Claude API and SDK documentation skill for building LLM-powered applications",
       "source": "./",

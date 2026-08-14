@@ -1,0 +1,22 @@
+{
+  "name": "notion-workspace-skills",
+  "version": "1.0.0",
+  "description": "Notion workspace design and migration workflows for root-owned databases, roadmaps, task boards, approvals, and role-aware operational views",
+  "author": {
+    "name": "dabsdamoon"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Notion Workspace Skills",
+    "shortDescription": "Build real Notion databases and focused operational views",
+    "longDescription": "Create and reorganize Notion project hubs with root-owned databases, safe record migration, timeline and board views, area-aware filters, approval tracking, and evidence-based post-write validation.",
+    "developerName": "dabsdamoon",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write", "Execute"],
+    "defaultPrompt": [
+      "Create real Notion databases under this root page and organize the roadmap, task board, and approval views.",
+      "Replace these linked database views with independently owned databases without losing records.",
+      "Reorganize this crowded Notion project page into role-aware timelines and boards."
+    ]
+  }
+}
