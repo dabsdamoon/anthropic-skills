@@ -69,7 +69,7 @@
     },
     {
       "name": "analysis-skills",
-      "description": "Critical thinking and analysis: idea critique, assumption challenging, fact-checking, and health statistics evidence reports",
+      "description": "Critical thinking, evidence-backed decision reports, business scenario analysis, and health statistics evidence reports",
       "source": "./plugins/analysis-skills"
     },
     {

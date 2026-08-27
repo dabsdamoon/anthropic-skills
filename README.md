@@ -161,6 +161,7 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **document-skills** | xlsx, docx, pptx, pdf | Create, read, edit spreadsheets, Word docs, presentations, and PDFs |
 | **design-skills** | frontend-design, algorithmic-art, canvas-design, brand-guidelines, theme-factory, slack-gif-creator, web-artifacts-builder | Frontend UI, generative art, visual design, and brand styling |
 | **developer-workflow-skills** | dual-track-tdd, dual-track-pr-creator, pr-creator, pr-checklist-verifier, setup-release-pipeline, deploy-check, webapp-testing, refactoring-resistant-tests, generate-git-work-report, docker-ram-checker, mcp-builder, prompt-optimizer, subagent-creator, debugging-retrospective, gcloud-direnv-setup | Evidence-driven product discovery, TDD delivery, track-aware PR docs, release pipelines, deploy checks, Git-based execution histories, browser testing, refactoring-resistant testing, Docker memory checks, debugging postmortems, and more |
+| **analysis-skills** | analytique, building-decision-reports, building-health-evidence-reports | Critical analysis, evidence-backed business decision reports, scenario modeling, and health statistics evidence packs |
 | **fde-estimation-skills** | capture-customer-outcomes, document-field-discovery, collect-as-built-evidence, define-estimation-policy, reconcile-scope-delta, generate-estimate-package | Interactive, evidence-backed FDE discovery, reviewed staffing, seniority, rate, scope, and effort reconciliation, budgetary estimates, and basis-of-estimate reports |
 | **writing-skills** | doc-coauthoring, internal-comms, skill-creator, system-prompt-creator, humanize-korean | Documentation workflows, internal comms, skill/prompt authoring, Korean AI-text humanizing |
 | **resume-skills** | resume-formatter, resume-translator, resume-project-summary | Resume formatting, EN/JP/KR/CN translation, portfolio summaries from codebases |
@@ -186,6 +187,14 @@ git rebase upstream/main
 ## Custom Skills
 
 These skills are original to this marketplace — not available in Anthropic's official repo.
+
+### Analysis
+
+| Skill | What It Does |
+|-------|-------------|
+| **analytique** | Critiques ideas, plans, and claims through explicit assumptions and practical reasoning |
+| **building-decision-reports** | Turns repository data, research, and business assumptions into decision-ready Markdown reports with calibrated conclusions, reproducible scenario math, and fully labeled SVG charts |
+| **building-health-evidence-reports** | Builds quote-safe health evidence packs from verified primary statistics, comparable denominators, time series, and international sources |
 
 ### Developer Workflow
 
@@ -278,6 +287,7 @@ These skills are original to this marketplace — not available in Anthropic's o
 plugins/
   document-skills/          # Plugin manifests and skills/
   design-skills/
+  analysis-skills/
   developer-workflow-skills/
   fde-estimation-skills/
   writing-skills/
