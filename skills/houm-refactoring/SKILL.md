@@ -5,7 +5,7 @@ description: "Refactor Houmy Python/FastAPI and React/Vite codebase. TRIGGER whe
 
 # Houmy Refactoring Skill
 
-Systematic refactoring for the Houmy maternity care RAG chatbot. Replaces implicit/magic patterns with explicit, grep-able, testable code.
+Systematic refactoring for the Houmy RAG chatbot codebase. Replaces implicit/magic patterns with explicit, grep-able, testable code.
 
 ## When to Activate
 
