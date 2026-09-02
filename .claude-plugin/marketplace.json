@@ -81,6 +81,24 @@
       "name": "research-workflow-skills",
       "description": "Research workflows: autonomous experiment iteration (keep/discard loop with noise guard and audit trail)",
       "source": "./plugins/research-workflow-skills"
+    },
+    {
+      "name": "academy-guide",
+      "description": "Recommends relevant Claude Academy courses, tutorials, and use cases when users ask how to use Claude",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/academy-guide"
+      ]
+    },
+    {
+      "name": "discernment-nudge",
+      "description": "Appends two or three short follow-up questions after a substantive answer to help users check key facts, probe the reasoning, and notice missing context",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/discernment-nudge"
+      ]
     }
   ]
 }
