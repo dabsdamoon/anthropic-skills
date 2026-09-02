@@ -170,13 +170,15 @@ The updater logs to `$CODEX_HOME/log/marketplace-updates.log` and keeps one rota
 | **houmy-skills** | houmlike-design, houm-cohort, houm-refactoring | Houm brand and UI design system, operational-document typography, cohort metrics, and systematic codebase refactoring |
 | **notion-workspace-skills** | notion-dashboard-builder | Create root-owned Notion databases and organize safe migrations, timelines, boards, approvals, and role-aware views |
 | **claude-api** | claude-api | Claude API & SDK reference across Python, TypeScript, Go, Java, PHP, Ruby, C#, curl |
+| **academy-guide** | academy-guide | Recommends Claude Academy courses, tutorials, and use cases when users ask how to use Claude |
+| **discernment-nudge** | discernment-nudge | Appends two or three follow-up questions after a substantive answer to help check facts, reasoning, and missing context |
 | **translation-skills** | translate-book | Translate entire books (PDF/DOCX/EPUB) into any language using parallel sub-agents |
 
 ## What's Included from Upstream
 
 This marketplace tracks [anthropics/skills](https://github.com/anthropics/skills) as an upstream remote. The following skills come directly from Anthropic's official repository:
 
-algorithmic-art, brand-guidelines, canvas-design, claude-api, doc-coauthoring, docx, frontend-design, internal-comms, mcp-builder, pdf, pptx, skill-creator, slack-gif-creator, theme-factory, web-artifacts-builder, webapp-testing, xlsx
+academy-guide, algorithmic-art, brand-guidelines, canvas-design, claude-api, discernment-nudge, doc-coauthoring, docx, frontend-design, internal-comms, mcp-builder, pdf, pptx, skill-creator, slack-gif-creator, theme-factory, web-artifacts-builder, webapp-testing, xlsx
 
 To sync with upstream:
 ```bash
